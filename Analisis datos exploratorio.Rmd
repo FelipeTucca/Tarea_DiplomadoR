@@ -15,6 +15,12 @@ library(Rlab)
 library(ggplot2)
 library(psych)
 library(kableExtra)
+library(knitr)
+library(DT)
+library(pander)
+library(tidyverse)
+library(dplyr)
+library(tid)
 
 ```
 
