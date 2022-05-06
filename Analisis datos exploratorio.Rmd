@@ -44,13 +44,22 @@ summary(Mortalidad)
 ```
 
 ```{r ordenar datos con gather, echo=TRUE}
-Mortalidad %>% gather("Mort_bloom", "Mort_OD", 7:8 )
+Mortalidad1 <- gather(Mortalidad,"Causa", "Muertos", 7:8 )
 ```
 
-```{r resumen, echo=FALSE}
-summary(Mortalidad)
+```{r resumen, echo=TRUE}
+summary(Mortalidad1)
+```
+```{r transformación datos, echo=FALSE}
+Mortalidad1$Causa <- as.factor(Mortalidad1$Causa)
 ```
 
+```{r resumen, echo=TRUE}
+summary(Mortalidad1)
+```
+```{r}
+
+```
 
 
 ## Including Plots
