@@ -1,14 +1,14 @@
 ## Título del trabajo
-Causa de mortalidad en salmones de cultivo 
+Mortalidad en Salmo salar debido a la presencia de bloom de algas y disminución de oxígeno disuelto
 
 ## Autor
 Felipe Tucca Díaz
 
 ## Descripción del problema a resolver
-Centros de cultivos pueden estar expuestas a diferentes causas de mortalidad durante su ciclo productivo. Este estudio intenta identificar a través de datos históricos (2011-2021) la principal causa de mortalidad en Salmo salar para un barrio específico. 
+23 centros de cultivos presentes en un barrio del sur de Chile estan expuestas continuamente a diferentes causas de mortalidad durante su ciclo productivo, siendo la principal especie cultivada el salmón del Atlántico (Salmo salar). Este estudio intenta identificar a través de datos históricos (2011-2022) la principal causa de mortalidad en el salmón del Atlántico para un barrio específico del sur de Chile. 
 
 ## Descripción de la variables de estudio, los factores que se desean analizar y el numero total de observaciones
-La variable en estudio es el número de peces muertos de la especie Salmo salar por causa de bloom de algas, oxígeno disuelto (OD) o ambos factores ambientales. Dichos factores que se desean analizar corresponden a registro histórico de mortalidad en centros de cultivos. El número total de observaciones corresponden a 1071 registros entre los años 2011 al 2021 para el barrio en estudio.
+La variable en estudio es el número de peces muertos de la especie Salmo salar por causa de la presencia de bloom de algas y disminución de oxígeno disuelto (OD). Estos dos factores que se desean analizar corresponden a registro histórico de mortalidad en centros de cultivos (i.e., Mortalidad por Bloom - Mortalidad por OD). El número total de observaciones corresponden a 1070 registros entre los años 2011 e inicio del 2022 para el barrio en estudio.
 
 
 

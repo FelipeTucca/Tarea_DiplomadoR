@@ -9,7 +9,12 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 
 library(readxl)
-library
+library(stats)
+library(MASS)
+library(Rlab)
+library(ggplot2)
+library(psych)
+library(kableExtra)
 
 ```
 
