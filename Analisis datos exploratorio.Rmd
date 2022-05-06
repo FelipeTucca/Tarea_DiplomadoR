@@ -20,19 +20,38 @@ library(DT)
 library(pander)
 library(tidyverse)
 library(dplyr)
-library(tid)
+library(tidyr)
 
 ```
 
-## R Markdown
+## **Análisis exploratorio de datos**
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+# Descripción de variables de estudio mediante histograma
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r resumen, echo=TRUE}
+summary(Mortalidad)
 ```
+
+```{r transformación datos, echo=FALSE}
+Mortalidad$centro_id <- as.factor(Mortalidad$centro_id)
+Mortalidad$año <- as.factor(Mortalidad$año)
+Mortalidad$mes <- as.factor(Mortalidad$mes)
+Mortalidad$Semana <- as.factor(Mortalidad$Semana)
+```
+
+```{r resumen con factores modificados, echo=TRUE}
+summary(Mortalidad)
+```
+
+```{r ordenar datos con gather, echo=TRUE}
+Mortalidad %>% gather("Mort_bloom", "Mort_OD", 7:8 )
+```
+
+```{r resumen, echo=FALSE}
+summary(Mortalidad)
+```
+
+
 
 ## Including Plots
 
