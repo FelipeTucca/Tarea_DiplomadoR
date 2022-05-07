@@ -24,13 +24,17 @@ library(tidyr)
 
 ```
 
-## **Análisis exploratorio de datos**
+## ***Análisis exploratorio de datos***
 
-# Descripción de variables de estudio mediante histograma
+# **Análisis preliminar de datos**
+
+Ajuste previo de la información presente en la planilla "mortalidad" donde se realizó transformación de datos mediante as.factor, colapso de columnas con la función gather creándose nuevas columnas "causa" - "muertos" y filtrar valores cero. Finalmente se realizó un resumen de una nueva planilla llamada "Mortalidad1" para el trabajo posterior solicitado en la Pauta de trabajo.
 
 ```{r resumen, echo=TRUE}
 summary(Mortalidad)
 ```
+
+# *Transformación de datos mediante as.factor*
 
 ```{r transformación datos, echo=TRUE}
 Mortalidad$centro_id <- as.factor(Mortalidad$centro_id)
@@ -43,8 +47,10 @@ Mortalidad$Semana <- as.factor(Mortalidad$Semana)
 summary(Mortalidad)
 ```
 
+# *Ordenar datos con gather() y filtrar valores cero de la base de datos*
+
 ```{r ordenar datos con gather, echo=TRUE}
-Mortalidad1 <- gather(Mortalidad,"Causa", "Muertos", 7:8 )
+Mortalidad1 <- gather(Mortalidad,"Causa", "Muertos", 7:8 ) %>% filter(Muertos > 0)
 ```
 
 ```{r resumen, echo=TRUE}
@@ -54,20 +60,56 @@ summary(Mortalidad1)
 Mortalidad1$Causa <- as.factor(Mortalidad1$Causa)
 ```
 
+# *Resumen*
+
 ```{r resumen, echo=TRUE}
 summary(Mortalidad1)
 ```
-```{r}
 
+
+## **Variación de la variable de estudio mediante histogramas**
+
+```{r histograma, echo=TRUE}
+ggplot(Mortalidad1, aes(Muertos)) + 
+  geom_histogram(bins = 30, color = "red", fill = "blue")+ 
+  labs(title="Histograma", x="Muertos", y="Frecuencia") 
+```
+
+```{r histograma, echo=TRUE}
+ggplot(Mortalidad1, aes(Muertos))+geom_histogram(bins = 20, aes(color= Causa))+
+  aes(position = "Muertos", bins =20, alpha = 0.3)
+```
+
+# **Tablas de frecuencia**
+
+Para la base de datos se observa que la causa de mortalidad en salmon del Atlántico no esta balanceada, registrándose un mayor número de muertos por la variable oxígeno disuelto (864 muertos). En definitiva, existe mayor cantidad de observaciones por causa de muerte por OD que bloom de algas, lo que genera el desbalance de los datos.
+
+```{r balance de datos, echo=TRUE}
+table(Mortalidad1$Causa)
 ```
 
 
-## Including Plots
+# *Gráficas*
 
-You can also embed plots, for example:
+# _Boxplot_
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r boxplot, echo=TRUE}
+Mortalidad1 %>% ggplot(aes(x= Peso_g, fill=Causa)) + geom_boxplot()
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r relación entre variables, echo=TRUE}
+Mortalidad1 %>% ggplot(aes(x= Causa, fill=Causa))+ geom_bar() + labs(x="", y="Muertos")
+```
+
+
+
+
+
+```{r interacción- de datos, echo=TRUE}
+Mortalidad1 %>% ggplot(aes(x=Causa, y=Muertos, color=Causa))+
+  geom_point(size=2) + labs(x= "Causa", y= "Número de muertos")+
+  theme_gray()
+
+```
+
