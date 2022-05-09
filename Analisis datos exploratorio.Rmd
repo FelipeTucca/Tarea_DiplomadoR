@@ -94,16 +94,8 @@ table(Mortalidad1$Causa)
 # _Boxplot_
 
 ```{r boxplot, echo=TRUE}
-Mortalidad1 %>% ggplot(aes(x= Peso_g, fill=Causa)) + geom_boxplot()
+Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_Muertos= log(Muertos)) %>% ggplot(aes(x= año, y= log_Muertos, fill= Causa)) + geom_boxplot()
 ```
-
-
-```{r relación entre variables, echo=TRUE}
-Mortalidad1 %>% ggplot(aes(x= Causa, fill=Causa))+ geom_bar() + labs(x="", y="Muertos")
-```
-
-
-
 
 
 ```{r interacción- de datos, echo=TRUE}
