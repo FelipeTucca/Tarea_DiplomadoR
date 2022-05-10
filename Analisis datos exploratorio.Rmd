@@ -1,7 +1,7 @@
 ---
 title: "Analisis exploratorio datos"
 author: "Felipe Tucca"
-date: '2022-05-03'
+date: '2022-05-10'
 output:
   pdf_document: default
   html_document: default
@@ -32,7 +32,7 @@ library(tidyr)
 
 Ajuste previo de la información presente en la planilla "mortalidad" donde se realizó transformación de datos mediante as.factor, colapso de columnas con la función gather creándose nuevas columnas "causa" - "muertos" y filtrar valores cero. Finalmente se realizó un resumen de una nueva planilla llamada "Mortalidad1" para el trabajo posterior solicitado en la Pauta de trabajo.
 
-```{r resumen, echo=TRUE}
+```{r resumen preliminar, echo=TRUE}
 summary(Mortalidad)
 ```
 
@@ -55,7 +55,7 @@ summary(Mortalidad)
 Mortalidad1 <- gather(Mortalidad,"Causa", "Muertos", 7:8 ) %>% filter(Muertos > 0)
 ```
 
-```{r resumen, echo=TRUE}
+```{r resumen datos, echo=TRUE}
 summary(Mortalidad1)
 ```
 ```{r transformación datos, echo=TRUE}
@@ -64,7 +64,7 @@ Mortalidad1$Causa <- as.factor(Mortalidad1$Causa)
 
 # *Resumen*
 
-```{r resumen, echo=TRUE}
+```{r resumen datos finales, echo=TRUE}
 summary(Mortalidad1)
 ```
 
