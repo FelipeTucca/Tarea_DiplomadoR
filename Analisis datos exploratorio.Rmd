@@ -67,47 +67,73 @@ summary(Mortalidad1)
 ```
 
 
-## **Variación de la variable de estudio mediante histogramas**
+## **Variación de la variable en estudio mediante histogramas**
 
-```{r histograma, echo=TRUE}
+## *Histograma 1*
+
+```{r histograma 1 peces muertos, echo=TRUE}
 ggplot(Mortalidad1, aes(Muertos)) + 
   geom_histogram(bins = 30, color = "red", fill = "blue")+ 
-  labs(title="Histograma", x="Muertos", y="Frecuencia") 
+  labs(title="Histograma peces muertos", x="Muertos", y="Frecuencia") 
 ```
 
-# *Transformación con función mutate ()*
+# *Transformación log con función mutate ()*
 
-```{r histograma datos transformado, echo=TRUE}
-Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_Muertos= log(Muertos)) %>% ggplot(aes(log_Muertos)) + 
-  geom_histogram(bins = 40, color = "red", fill = "blue")+ labs(title="Histograma", x="Log Muertos", y="Frecuencia") 
+```{r histograma 1 datos transformado log de peces muertos, echo=TRUE}
+Mortalidad1 %>% mutate(log_Muertos= log(Muertos)) %>% ggplot(aes(log_Muertos)) + 
+  geom_histogram(bins = 20, color = "red", fill = "blue")+ labs(title="Histograma peces muertos", x="Log Muertos", y="Frecuencia")
 ```
 
-```{r histograma datos transformado, echo=TRUE}
+```{r histograma 1 datos transformado log de biomasa muerta, echo=TRUE}
 Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_biomasa= log(Biomasa_ton)) %>% ggplot(aes(log_biomasa)) + 
-  geom_histogram(bins = 50, color = "yellow", fill = "green")+ labs(title="Histograma", x="Log biomasa", y="Frecuencia")
+  geom_histogram(bins = 40, color = "yellow", fill = "green")+ labs(title="Histograma biomasa muerta (ton)", x="Log biomasa", y="Frecuencia")
 ```
-## *Histograma*
+## *Histograma 2*
 
-```{r histograma, echo=TRUE}
+
+
+```{r histograma 2, echo=TRUE}
 ggplot(Mortalidad1, aes(Muertos))+geom_histogram(bins = 20, aes(color= Causa))+
-  aes(position = "Muertos", bins =20, alpha = 0.3)
+  aes(position = "identity", bins =20, alpha = 0.3)
 ```
 
-# *Transformación con función mutate ()*
+# *Transformación log con función mutate ()*
 
+# *_Histograma log_Muertos y causa de mortalidad_*
 
+```{r histograma 2 datos transformados log peces muertos y causa de mortalidad, echo=TRUE}
+Mortalidad1 %>% mutate(log_Muertos= log(Muertos)) %>% ggplot(aes(log_Muertos))+ geom_histogram(bins = 30, aes(color= Causa))+
+  aes(position = "identity", bins =20, alpha = 0.4)
+```
 
+# *_Histograma log_Biomasa muerta (toneladas) y causa de mortalidad_*
 
+```{r histograma 2 datos transformados log biomasa muerta y causa de mortalidad, echo=TRUE}
+Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_biomasa= log(Biomasa_ton)) %>% ggplot(aes(log_biomasa))+ geom_histogram(bins = 40, aes(color= Causa))+
+  aes(position = "identity", bins =30, alpha = 0.4)
 
+```
 
 # **Tablas de frecuencia**
 
 Para la base de datos se observa que la causa de mortalidad en salmon del Atlántico no esta balanceada, registrándose un mayor número de muertos por la variable oxígeno disuelto (864 muertos). En definitiva, existe mayor cantidad de observaciones por causa de muerte por OD que bloom de algas, lo que genera el desbalance de los datos.
 
-```{r balance de datos, echo=TRUE}
+```{r balance de datos Causa, echo=TRUE}
 table(Mortalidad1$Causa)
 ```
 
+Por otro lado, de acuerdo al registro de mortalidades por centro se observa que 4 centros registran históricamente un número mayor a 100 eventos por mortalidad provocadas por la acción de bloom de algas y disminución de oxígeno disuelto.
+
+```{r balance de datos centro_id, echo=TRUE}
+table(Mortalidad1$centro_id)
+```
+
+Para el barrio en estudio el mayor número de registros históricos de peces muertos se encuentran durante los años 2015, 2019 y 2021, siendo mayoritariamente reportados durante otoño (mes 3 - mes 4 - mes 5) y primavera (mes 10 - mes 11). 
+
+```{r balance de datos tiempo, echo=TRUE}
+table(Mortalidad1$año)
+table(Mortalidad1$mes)
+```
 
 # *Gráficas*
 
