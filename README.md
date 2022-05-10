@@ -14,7 +14,3 @@ La variable en estudio es el número de peces muertos de la especie Salmo salar 
 
 
 
-=======
->>>>>>> ed0532d9ab7c7d6985028ac344f65a29d4537ce5
-
-
