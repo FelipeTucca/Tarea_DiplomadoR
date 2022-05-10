@@ -2,7 +2,9 @@
 title: "Analisis exploratorio datos"
 author: "Felipe Tucca"
 date: '2022-05-03'
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=TRUE}
@@ -190,7 +192,7 @@ Mortalidad1 %>% summarize(n(), mean(Peso_g), sd(Peso_g), median(Peso_g))
 # *Tablas*
 
 ```{r tabla de datos , echo=TRUE}
-DT::datatable(Mortalidad, caption = "Mortalidad en Salmo salar entre los años 2011 al 2022 según registro de causa por bloom de algas y oxígeno disuelto")
+DT::datatable(Mortalidad1, caption = "Mortalidad en Salmo salar entre los años 2011 al 2022 según registro de causa por bloom de algas y oxígeno disuelto")
 ```
 
 
