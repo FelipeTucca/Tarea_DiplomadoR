@@ -161,9 +161,18 @@ Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_b
 
 No existe un patrón claro que relacione el registro de causa de muerte en el tiempo sobre la biomasa de S.salar. Otras correlaciones fueron realizadas con la variable año y centro_id, pero tampoco hubo un patrón que relacione la biomasa muerta con el tiempo transcurrido ni el lugar. Se consideró como factor la causa de muerte en S. salar.
 
-```{r Correlación, echo=TRUE}
-Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_biomasa= log(Biomasa_ton)) %>% ggplot(aes(x= Nro, y=log_biomasa, color=Causa))+ geom_point(size=1) + labs(x= "Nro registro", y= "Log biomasa (ton)")+ theme_gray() + labs( title = "Correlación")
+```{r Correlación biomasa y nro registro, echo=TRUE}
+Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_biomasa= log(Biomasa_ton)) %>% ggplot(aes(x= Nro, y=log_biomasa, color=Causa))+ geom_point(size=1) + labs(x= "Nro registro", y= "Log biomasa (ton)")+ theme_gray() + labs( title = "Correlación registro - biomasa")
 ```
+
+# *_Correlación peces muertos y peso entre los años 2011 a 2022_*
+
+Aquellos salmones de mayor peso durante los 11 años de registros presentaron mayor nuemro de muertos por causa de bloom y oxígeno disuelto.
+
+```{r}
+Mortalidad1 %>% mutate(log_peso= log(Peso_g)) %>% mutate(log_muertos= log(Muertos)) %>% ggplot(aes(x= log_peso, y= log_muertos, color=Causa))+ geom_point(size=1) + labs(x= "Log Peso (g)", y= "Log muertos")+ theme_gray() + labs( title = "Correlación peso - muertos")
+```
+
 
 
 # **Resumen de datos mediante tablas y estadística descriptiva**
@@ -188,13 +197,25 @@ Finalmente, en ralación al peso del salmon del Atlántico muerto por la acción
 Mortalidad1 %>% summarize(n(), mean(Peso_g), sd(Peso_g), median(Peso_g))
 ```
 
-
 # *Tablas*
 
-```{r tabla de datos , echo=TRUE}
+Tabla dinámica con toda la información utilizando la función datatable
+
+```{r tabla de datos Mortalidad1, echo=TRUE}
 DT::datatable(Mortalidad1, caption = "Mortalidad en Salmo salar entre los años 2011 al 2022 según registro de causa por bloom de algas y oxígeno disuelto")
 ```
 
+Para resumir la biomasa muerta de S. salar por causa de bloom de algas y oxígeno disuelto dentro del barrio en estudio (periodo 2011 al 2022) se generó un nuevo objeto llamado *Mortalidad2*.
+
+```{r resumen datos descriptivos para la muertalidad de S. salar por centro, echo=TRUE}
+Mortalidad2 <- Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% select(centro_id, Biomasa_ton) %>% group_by(centro_id) %>% summarize("N"= n(), "Promedio"= mean(Biomasa_ton), "DE"= sd(Biomasa_ton), "Mín"= min(Biomasa_ton), "Máx"= max(Biomasa_ton))
+```
+
+En base al resumen estadísitico descriptivo realizado en *Mortalidad2* se elaboró una nueva tabla con la función kbl(), la cual resume en una tabla el promedio, desviación estándar y rangos (min-máx) de la biomasa muerta (ton) a causa de los factores bloom y oxígeno disuelto.
+
+```{r tabla resumen con kbl, echo=TRUE}
+kbl(Mortalidad2, caption = "Tabla. Resumen de la biomasa muerta (toneladas) para la especie S. salar por cada centro de cultivo presente en el barrio entre los años 2011-2022") %>% kable_classic_2()
+```
 
 
 
