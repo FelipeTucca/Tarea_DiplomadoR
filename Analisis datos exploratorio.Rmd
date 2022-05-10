@@ -88,7 +88,6 @@ Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_b
 ```
 
 
-
 ```{r histograma, echo=TRUE}
 ggplot(Mortalidad1, aes(Muertos))+geom_histogram(bins = 20, aes(color= Causa))+
   aes(position = "Muertos", bins =20, alpha = 0.3)
