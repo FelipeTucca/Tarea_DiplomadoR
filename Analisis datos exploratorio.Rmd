@@ -77,21 +77,28 @@ ggplot(Mortalidad1, aes(Muertos)) +
 
 # *Transformación con función mutate ()*
 
-```{r histograma dato transformado, echo=TRUE}
+```{r histograma datos transformado, echo=TRUE}
 Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_Muertos= log(Muertos)) %>% ggplot(aes(log_Muertos)) + 
-  geom_histogram(bins = 20, color = "red", fill = "blue")+ labs(title="Histograma", x="Log Muertos", y="Frecuencia") 
+  geom_histogram(bins = 40, color = "red", fill = "blue")+ labs(title="Histograma", x="Log Muertos", y="Frecuencia") 
 ```
 
-```{r histograma dato transformado, echo=TRUE}
+```{r histograma datos transformado, echo=TRUE}
 Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_biomasa= log(Biomasa_ton)) %>% ggplot(aes(log_biomasa)) + 
-  geom_histogram(bins = 20, color = "yellow", fill = "green")+ labs(title="Histograma", x="Log biomasa", y="Frecuencia")
+  geom_histogram(bins = 50, color = "yellow", fill = "green")+ labs(title="Histograma", x="Log biomasa", y="Frecuencia")
 ```
-
+## *Histograma*
 
 ```{r histograma, echo=TRUE}
 ggplot(Mortalidad1, aes(Muertos))+geom_histogram(bins = 20, aes(color= Causa))+
   aes(position = "Muertos", bins =20, alpha = 0.3)
 ```
+
+# *Transformación con función mutate ()*
+
+
+
+
+
 
 # **Tablas de frecuencia**
 
