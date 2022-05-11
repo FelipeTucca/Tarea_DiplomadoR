@@ -28,6 +28,10 @@ library(tidyr)
 
 ## ***Análisis exploratorio de datos***
 
+```{r excel, echo=TRUE}
+Mortalidad <- read_excel("Mortalidad.xlsx")
+```
+
 # **Análisis preliminar de datos**
 
 Ajuste previo de la información presente en la planilla "mortalidad" donde se realizó transformación de datos mediante as.factor, colapso de columnas con la función gather creándose nuevas columnas "causa" - "muertos" y filtrar valores cero. Finalmente se realizó un resumen de una nueva planilla llamada "Mortalidad1" para el trabajo posterior solicitado en la Pauta de trabajo.
