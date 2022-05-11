@@ -38,10 +38,19 @@ summary(Mortalidad)
 
 # *Transformación de datos mediante as.factor*
 
-```{r transformación datos, echo=TRUE}
+```{r transformación centro_id, echo=TRUE}
 Mortalidad$centro_id <- as.factor(Mortalidad$centro_id)
+```
+
+```{r transformación año, echo=TRUE}
 Mortalidad$año <- as.factor(Mortalidad$año)
+```
+
+```{r transformacion mes, echo=TRUE}
 Mortalidad$mes <- as.factor(Mortalidad$mes)
+```
+
+```{r transformacion Semana, echo=TRUE}
 Mortalidad$Semana <- as.factor(Mortalidad$Semana)
 ```
 
