@@ -14,3 +14,4 @@ Otras variables presentes en esta base de datos es el tiempo transcurrido entre 
 
 
 
+
