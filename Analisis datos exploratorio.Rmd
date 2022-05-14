@@ -1,5 +1,5 @@
 ---
-title: "Analisis exploratorio de datos"
+title: "Análisis exploratorio de datos"
 author: "Felipe Tucca Díaz"
 date: '2022-05-13'
 output:
