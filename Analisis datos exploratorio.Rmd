@@ -21,6 +21,7 @@ library(tidyr)
 
 ```
 
+### Enlace github: https://github.com/FelipeTucca/Tarea_DiplomadoR 
 
 # **Análisis exploratorio de datos sobre la mortalidad en *Salmo salar* a causa de los factores bloom de algas y oxígeno disuelto**
 
