@@ -12,6 +12,6 @@ La variable en estudio fue el número de peces muertos de la especie *Salmo sala
 
 Otras variables presentes en esta base de datos es el tiempo transcurrido entre el primer registro para el año 2011 hasta el 2022, los distintos centros de cultivos (23 centros en total) presentes en el barrio y el peso de los salmones (g) al momento del registro de mortalidad.
 
-# Enlace github: https://github.com/FelipeTucca/Tarea_DiplomadoR
+
 
 
