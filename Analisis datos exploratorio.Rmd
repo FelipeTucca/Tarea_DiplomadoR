@@ -200,9 +200,9 @@ Mortalidad1 %>% mutate(log_Muertos= log(Muertos)) %>% ggplot(aes(x= Causa, y= lo
 No existe un patrón claro que relacione el registro de causa de muertes en el tiempo sobre la biomasa de *S.salar*. Otras correlaciones fueron realizadas con la variable año y centro_id, pero tampoco hubo un patrón que relacione la biomasa muerta con el tiempo transcurrido ni el lugar (i.e., centro_id). Para esta correlación se consideró como factor la causa de muerte en *S. salar*.
 
 ```{r Correlación biomasa muerta según causa, echo=TRUE}
-Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_biomasa= log(Biomasa_ton)) %>% ggplot(aes(x= mes, y=log_biomasa))+ geom_point(size=1) + labs(x= "Mes", y= "Log biomasa (ton)")+ theme_gray() + labs( title = "Relación mes y biomasa muerta (ton)") + theme_bw()
+Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_biomasa= log(Biomasa_ton)) %>% ggplot(aes(x= mes, y=log_biomasa, color= Causa))+ geom_point(size=1) + labs(x= "Mes", y= "Log biomasa (ton)")+ theme_gray() + labs( title = "Relación biomasa muerta (ton) por mes") + theme_bw()
 
-Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_biomasa= log(Biomasa_ton)) %>% ggplot(aes(x= Semana, y=log_biomasa))+ geom_point(size=1) + labs(x= "Semana", y= "Log biomasa (ton)")+ theme_gray() + labs( title = "Relación semana y biomasa muerta (ton)") + theme_bw()
+Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_biomasa= log(Biomasa_ton)) %>% ggplot(aes(x= Semana, y=log_biomasa, color= Causa))+ geom_point(size=1) + labs(x= "Semana", y= "Log biomasa (ton)")+ theme_gray() + labs( title = "Relación biomasa muerta (ton) por semana") + theme_bw()
 
 ```
 
