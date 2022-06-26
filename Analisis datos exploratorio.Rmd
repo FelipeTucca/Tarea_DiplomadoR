@@ -1,7 +1,7 @@
 ---
-title: "Análisis exploratorio de datos"
+title: "Análisis exploratorio y estadístico de los datos"
 author: "Felipe Tucca Díaz"
-date: '2022-05-13'
+date: '2022-06-26'
 output:
   html_document: default
   pdf_document: default
@@ -314,7 +314,7 @@ kbl(Mortalidad2, caption = "Tabla 2. Resumen de la biomasa muerta (toneladas) pa
 
 
 
-
+# **Análisis estadísitico de los datos**
 
 
 
