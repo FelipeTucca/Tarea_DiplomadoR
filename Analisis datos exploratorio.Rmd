@@ -312,3 +312,10 @@ En base la descripción estadística realizada para el objeto *Mortalidad2* se e
 kbl(Mortalidad2, caption = "Tabla 2. Resumen de la biomasa muerta (toneladas) para la especie S. salar por cada centro de cultivo presente en el barrio entre los años 2011-2022") %>% kable_classic_2()
 ```
 
+
+
+
+
+
+
+
