@@ -171,6 +171,9 @@ table(Mortalidad1$mes)
 ```
 
 
+
+
+
 ## **Relación entre variable cuantitativa y factores usando gráficas**
 
 ### *Boxplot Causa de la mortalidad en la biomasa (toneladas) de Salmo salar entre el 2011 al 2022*
