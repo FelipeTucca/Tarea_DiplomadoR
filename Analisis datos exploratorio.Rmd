@@ -22,6 +22,7 @@ library(pander)
 library(lmtest)
 library(gridExtra)
 library(multcomp)
+library(car)
 
 ```
 
@@ -228,11 +229,26 @@ Mortalidad1 %>% mutate(log_Muertos= log(Muertos)) %>% ggplot(aes(x= Causa, y= lo
 
 La relación entre las causas de mortalidad por bloom y oxígeno disuelto muestra una dispersión de la información entre los años 2011 a 2022. No se observa una relación directa o linealidad entre ambas causas de muerte en salmones.
 
+
 ```{r relación mortalidad por bloom y OD, echo=TRUE}
 
 bloom_OD <- Mortalidad %>% filter(Mort_bloom > 0) %>% filter(Mort_OD > 0) %>% mutate(Mort_bloom_ton= (Peso_g * Mort_bloom)/1000000) %>% mutate(log_biomasa_bloom= log(Mort_bloom_ton)) %>% mutate(Mort_OD_ton= (Peso_g * Mort_OD)/1000000) %>% mutate(log_biomasa_OD= log(Mort_OD_ton))
 
-bloom_OD %>% ggplot(aes(x= log_biomasa_OD, y=log_biomasa_bloom))+ geom_point(shape = 19, colour = "steelblue4", size= 3) + labs(x= "Log Mortalidad OD (ton)", y= "Log Mortalidad bloom (ton)")+ theme_gray() + labs( title = "Relación mortalidad OD vs Bloom") + theme_bw()
+bloom_OD %>% ggplot(aes(x= log_biomasa_OD, y=log_biomasa_bloom))+ geom_point(shape = 19, colour = "steelblue4", size= 3) + labs(x= "Log Mortalidad OD (ton)", y= "Log Mortalidad bloom (ton)") + theme_gray() + labs( title = "Relación mortalidad OD vs Bloom con datos registrados entre 2011 a 2022") + scale_x_continuous(limits = c(-6, 6)) + scale_y_continuous(limits = c(-6,6)) + geom_smooth(method= lm, se= FALSE) + theme_bw()
+```
+
+
+Basándose en una prueba de correlación entre las causas de muerte por bloom de algas y disminución de oxígeno disuelto en los último 10 años dentro del barrio en estudio, se obtuvo que no existe correlación entre variables (valor p mayor al 5%), moestrando a su vez este ajuste lineal una baja correlación del 15%. Por lo tanto se acepta la hipótesisi nula (HO).
+
+```{r inferencia estadística, echo=TRUE}
+# Prueba de hipótesis para la correlación entre causas de muerte
+# H0: No hay correlación entre causas de muerte en salmón
+# H1: Existe correlación entre causa de muerte en salmón
+
+cor_causa <- cor.test(bloom_OD$log_biomasa_OD, bloom_OD$log_biomasa_bloom, method = "pearson", conf.level = 0.95)
+cor_causa
+
+pander::pander(cor_causa, caption ="Prueba de hipótesis para el coeficiente de correlación entre log Mortalidad bloom y OD")
 ```
 
 
@@ -245,6 +261,7 @@ No se observa un patrón claro que diferencie la mortalidad causada por bloom de
 Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_biomasa= log(Biomasa_ton)) %>% ggplot(aes(x= mes, y=log_biomasa, color= Causa))+ geom_point(size=1) + labs(x= "Mes", y= "Log biomasa muerta (ton)")+ theme_gray() + labs( title = "Relación biomasa muerta (ton) por mes") + theme_bw()
 
 ```
+
 
 
 Al realizar un zoom sobre los registros de mortalidad dentro del año 2021 se oberserva una mayor frecuencia y reporte de mortalidad por causa de OD, sin cambios bruscos (registros atípicos) a los largo de las semanas. Sin embargo, si se observa que para este año 2021 ocurrio que la mayor biomasa de salmones muertos fue afectada por la acción de bloom de algas, siendo la mayor mortalidad registrada históricamente en este barrio (log biomasa muerta > 5).  
@@ -265,7 +282,7 @@ grid.arrange(mes1, mes2, ncol = 1, nrow = 2)
 
 Salmones con mayor peso (g) registraron un elevado número mortalidad por causa de bloom de algas y oxígeno disuelto durante el periodo 2011 al 2022 para el barrio en estudio.
 
-```{r}
+```{r relación peces muertos y peso, echo=TRUE}
 Mortalidad1 %>% mutate(log_peso= log(Peso_g)) %>% mutate(log_muertos= log(Muertos)) %>% ggplot(aes(x= log_peso, y= log_muertos, color=Causa))+ geom_point(size=1) + labs(x= "Log Peso (g)", y= "Log muertos")+ theme_gray() + labs( title = "Relación peso de salmones y número de muertos entre el 2011 al 2022") + theme_bw()
 ```
 
@@ -301,9 +318,22 @@ Para resumir la biomasa muerta de *S. salar* a causa del bloom de algas y oxíge
 Dentro del análisis descriptivo por centro de cultivo se observa que en promedio la mayor biomasa muerta en estos últimos 10 años se registra para CM0235, CM0740 y CM0778 (> 10 ton). Para el caso de los dos primeros centros (CM0235 y CM0740) se visualiza un alto número de reportes por mortalidad (biomasa muerta) en comparación al resto de los centros de cultivo presentes en el área de estudio (Tabla 3).
 
 ```{r resumen datos descriptivos para la mortalidad de S. salar por centro, echo=TRUE}
-Tabla_centro <- Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% group_by(centro_id) %>% summarize("N"= n(), "Promedio"= mean(Biomasa_ton), "DE"= sd(Biomasa_ton), "Mín"= min(Biomasa_ton), "Máx"= max(Biomasa_ton))
+Tabla_centro <- Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% group_by(centro_id) %>% summarize("N"= n(), "Promedio"= mean(Biomasa_ton), "DE"= sd(Biomasa_ton), "Mín"= min(Biomasa_ton), "Máx"= max(Biomasa_ton), "Varianza"= var(Biomasa_ton))
 
 kbl(Tabla_centro, caption = "Tabla 3. Resumen de la biomasa muerta (toneladas) por cada centro de cultivo presente en el barrio entre los años 2011-2022") %>% kable_classic_2()
+```
+
+
+####**Ajuste modelo biomasa muerta por centro**
+
+Basado en el ajuste del modelo de ANOVA una vía por criterio de clasificación **centro de cultivo** nos dice que el modelo general existen diferencias en la biomasa muerta entre centros de cultivos (p valor mayor 0.05), por lo tanto, se rechaza la **hipótesis nula** que hace referencia a una similitud en biomasa muerta entre centros del cultivos para registros comprendidos entre los periodos 2011 a 2022.
+
+```{r ajuste modelo biomasa muerta por centro, echo=TRUE}
+anova_centro <- Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_biomasa= log(Biomasa_ton)) 
+modelo1_anova1_centro <-lm(log_biomasa ~ centro_id, data = anova_centro)
+anova(modelo1_anova1_centro)
+
+pander::pander(modelo1_anova1_centro, caption = "ANOVA a una vía de clasificación Centro de cultivo")
 ```
 
 
@@ -313,9 +343,23 @@ kbl(Tabla_centro, caption = "Tabla 3. Resumen de la biomasa muerta (toneladas) p
 En este análisis descriptivo es posible observar que la mayor biomasa muerta dentro del barrio ocurrió en el mes 4 con un promedio de 30 (desviación estándar = 116; rango= 0.0005 - 1031) toneladas. Para el mes 7 fue donde se reportó la menor biomasa muerta (ton) dentro de estos últimos 10 años con un promedio de 0.8 toneladas (Tabla 4). 
 
 ```{r resumen datos descriptivos para la mortalidad de S. salar por mes, echo=TRUE}
-Tabla_mes <- Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% group_by(mes) %>% summarize("N"= n(), "Promedio"= mean(Biomasa_ton), "DE"= sd(Biomasa_ton), "Mín"= min(Biomasa_ton), "Máx"= max(Biomasa_ton))
+Tabla_mes <- Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% group_by(mes) %>% summarize("N"= n(), "Promedio"= mean(Biomasa_ton), "DE"= sd(Biomasa_ton), "Mín"= min(Biomasa_ton), "Máx"= max(Biomasa_ton), "Varianza"= var(Biomasa_ton))
 
 kbl(Tabla_mes, caption = "Tabla 4. Resumen de la biomasa muerta (toneladas) por cada mes entre los años 2011-2022") %>% kable_classic_2()
+```
+
+
+
+####**Ajuste modelo biomasa muerta por mes**
+
+Basado en el ajuste del modelo de ANOVA una vía por criterio de clasificación **mes** nos dice que el modelo general existen diferencias en la biomasa muerta entre meses (p valor mayor 0.05), por lo tanto, se rechaza la **hipótesis nula** que hace referencia a una similitud en biomasa muerta entre meses.
+
+```{r ajuste modelo biomasa muerta por mes, echo=TRUE}
+anova_mes <- Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_biomasa= log(Biomasa_ton)) 
+modelo2_anova2_mes <-lm(log_biomasa ~ mes, data = anova_mes)
+anova(modelo2_anova2_mes)
+
+pander::pander(modelo2_anova2_mes, caption = "ANOVA a una vía de clasificación mes")
 ```
 
 
@@ -325,9 +369,23 @@ kbl(Tabla_mes, caption = "Tabla 4. Resumen de la biomasa muerta (toneladas) por 
 Se observa que el año 2021 existió una mayor biomasa muerta dentro del barrio en estudio con un promedio de 15.8 toneladas y un número de registros de 346. Por otro lado, para el año 2018 se observa una alta biomasa muerta (promedio 8 toneladas) con solo 2 registros dentro del barrio (Tabla 5).
 
 ```{r resumen datos descriptivos para la mortalidad de S. salar por año, echo=TRUE}
-Tabla_año <- Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% group_by(año) %>% summarize("N"= n(), "Promedio"= mean(Biomasa_ton), "DE"= sd(Biomasa_ton), "Mín"= min(Biomasa_ton), "Máx"= max(Biomasa_ton))
+Tabla_año <- Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% group_by(año) %>% summarize("N"= n(), "Promedio"= mean(Biomasa_ton), "DE"= sd(Biomasa_ton), "Mín"= min(Biomasa_ton), "Máx"= max(Biomasa_ton), "Varianza"= var(Biomasa_ton))
 
 kbl(Tabla_año, caption = "Tabla 5. Resumen de la biomasa muerta (toneladas) por cada año") %>% kable_classic_2()
+```
+
+
+
+####**Ajuste modelo biomasa muerta por año**
+
+Basado en el ajuste del modelo de ANOVA una vía por criterio de clasificación **año** nos dice que el modelo general existen diferencias en la biomasa muerta entre años (p valor mayor 0.05), por lo tanto, se rechaza la **hipótesis nula** que hace referencia a una similitud en biomasa muerta entre años.
+
+```{r ajuste modelo biomasa muerta por año, echo=TRUE}
+anova_año <- Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_biomasa= log(Biomasa_ton)) 
+modelo3_anova3_año <-lm(log_biomasa ~ año, data = anova_mes)
+anova(modelo3_anova3_año)
+
+pander::pander(modelo3_anova3_año, caption = "ANOVA a una vía de clasificación año")
 ```
 
 
@@ -342,10 +400,46 @@ DT::datatable(Mortalidad1, caption = "Tabla 6. Mortalidad en Salmo salar entre l
 
 
 
-# **Análisis estadístico de datos sobre la mortalidad en *Salmo salar* a causa de los factores bloom de algas y oxígeno disuelto**
+# **Análisis estadístico de datos**
 
-## **Modelo lineal**
+## **Modelo lineal análisis de varianza**
+
+### Modelo lineal
+
+```{r modelo lineal datos mortalidad, echo=TRUE}
+Mortalidad2 <- Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_biomasa= log(Biomasa_ton))
+lm.aov_biomasa <- lm(log_biomasa ~ Causa + centro_id + mes, data = Mortalidad2)
+
+pander::pander (summary(lm.aov_biomasa), caption = "Modelo de efectos fijos")
+```
 
 
+### Independencia
 
+```{r supuesto de independencia, echo=TRUE}
+plot(lm.aov_biomasa$residuals, pch = 1, col= "steelblue1")
+
+dwtest(log_biomasa ~ Causa, data = Mortalidad2, alternative = c("two.sided"), iterations = 15)
+```
+
+
+### Homogeneidad de varianza
+
+```{r homogeneidad de varianza, echo=TRUE}
+plot(lm.aov_biomasa, 1, pch = 1, col = "steelblue")
+
+bptest(log_biomasa ~ Causa, data = Mortalidad2, center = "median")
+```
+
+
+### Normalidad
+
+```{r test de normalidad, echo=TRUE}
+plot(lm.aov_biomasa, 2, pch = 1, col = "steelblue")
+
+aov_residual_biomasa <- residuals(object = lm.aov_biomasa)
+shapiro.test(aov_residual_biomasa)
+```
+
+Al realizar las pruebas y representaciones gráficas de los supuestos se determina que existe el cumplimiento de dos de estos (normalidad y homogeneidad de varianza). El supuesto de linealidad no se cumple 
 
