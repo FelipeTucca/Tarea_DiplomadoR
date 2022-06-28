@@ -1,5 +1,5 @@
 ---
-title: "Análisis exploratorio de datos"
+title: "Análisis exploratorio y estadísitico de datos"
 author: "Felipe Tucca Díaz"
 date: '2022-06-26'
 output:
@@ -18,6 +18,10 @@ library(knitr)
 library(DT)
 library(dplyr)
 library(tidyr)
+library(pander)
+library(lmtest)
+library(gridExtra)
+library(multcomp)
 
 ```
 
@@ -97,9 +101,9 @@ summary(Mortalidad1)
 ## **Variación de la variable mediante histogramas**
 
 
-### *Histograma 1*
+### *Histograma 1: Número de peces muertos y cálculo de biomasa muerta (toneladas)*
 
-Debido a que no se logró visualizar de buena manera la información utilizando histograma (ver Histograma peces muertos), se procedió a la transformación logarítmica de la variable mortalidad en *S. salar* para los años comprendidos entre el 2011 al 2022.  
+Debido a que no se logró visualizar de buena manera la información utilizando histograma (ver "Histograma peces muertos"), se procedió a la transformación logarítmica de la variable mortalidad en *S. salar* para los años comprendidos entre el 2011 al 2022.  
 
 ```{r histograma 1 peces muertos, echo=TRUE}
 ggplot(Mortalidad1, aes(Muertos)) + 
@@ -114,7 +118,7 @@ ggplot(Mortalidad1, aes(Muertos)) +
 
 #### *_Histograma peces muertos_*
 
-Al transformar a valores logaritmo la variable muertos se logra una mejor visualización de la información (ver Histograma salmones muertos entre 2011 al 2022).
+Al transformar los valores logaritmicamente la variable "Muertos" presenta una mejor visualización de la información (ver Histograma salmones muertos entre 2011 al 2022).
 
 ```{r histograma 1 datos transformado log de peces muertos, echo=TRUE}
 Mortalidad1 %>% mutate(log_Muertos= log(Muertos)) %>% ggplot(aes(log_Muertos)) + 
@@ -134,9 +138,9 @@ Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_b
 
 
 
-### *Histograma 2*
+### *Histograma 2: Número de peces muertos y cálculo de biomasa muerta (toneladas) por causa*
 
-Debido a que no se logra visualizar de buena manera la información utilizando histograma se procedió a la transformación logarítmica de la mortalidad en *S. salar* a causa de muertes por bloom de algas y oxígeno disuelto (ver abajo). 
+Debido a que no se logra visualizar de buena manera la información utilizando histograma se procedió a la transformación logarítmica de la mortalidad en *S. salar* por causa de muertes (es decir, bloom de algas y oxígeno disuelto). 
 
 ```{r histograma 2, echo=TRUE}
 ggplot(Mortalidad1, aes(Muertos))+geom_histogram(bins = 20, aes(color= Causa)) + theme_bw() 
@@ -147,7 +151,7 @@ ggplot(Mortalidad1, aes(Muertos))+geom_histogram(bins = 20, aes(color= Causa)) +
 ### *Transformación logarítmica de la variable con función mutate ()*
 
 
-#### *_Histograma log_Muertos y causa de mortalidad_*
+#### *_Histograma peces muertos por causa_*
 
 Datos muestran que históricamente la mayor cantidad de peces muertos es por causa de bloom de algas presentes en la columna de agua.
 
@@ -157,7 +161,7 @@ Mortalidad1 %>% mutate(log_Muertos= log(Muertos)) %>% ggplot(aes(log_Muertos))+ 
 
 
 
-#### *_Histograma log_Biomasa muerta (toneladas) y causa de mortalidad_*
+#### *_Histograma biomasa muerta (toneladas) por causa_*
 
 Entre los periodos 2011 a 2022 existe una mayor biomasa muerta (ton) de *S. salar* en el barrio por causa de la acción de bloom de algas que por la disminución de oxígeno disuelto.
 
@@ -176,14 +180,14 @@ table(Mortalidad1$Causa)
 ```
 
 
-Por otro lado, de acuerdo al registro de mortalidades por centro se observa que 4 centros de cultivos muestran históricamente un mayor número de eventos (> 100 registros) por mortalidad provocadas por ambos factores (i.e, bloom y OD).
+Por otro lado, de acuerdo al registro de mortalidades por centro se observa que 4 centros de cultivos muestran históricamente un mayor número de eventos (> 100 registros) por mortalidad provocadas por ambos factores (i.e, bloom y OD). Entre ellos se encuentran: CM0235; CM0508; CM0740 y CM0890.
 
 ```{r balance de datos centro_id, echo=TRUE}
 table(Mortalidad1$centro_id)
 ```
 
 
-Para el barrio en estudio el mayor número de registros históricos de peces muertos se encuentran durante los años 2015, 2019 y 2021, siendo mayoritariamente reportadas durante las estaciones de otoño (mes 3 - mes 4 - mes 5) y primavera (mes 10 - mes 11), es decir, una frecuencia mayor a 100 registros. 
+Para el barrio en estudio el mayor número de registros históricos de peces muertos se encuentran durante los años 2015, 2019 y 2021 (> 250 registros), siendo mayoritariamente reportadas durante las estaciones de otoño-invierno (mes 3 - mes 4 - mes 5 -mes 6) y primavera (mes 10 - mes 11), es decir, una frecuencia mayor a 100 registros. 
 
 ```{r balance de datos tiempo, echo=TRUE}
 table(Mortalidad1$año)
@@ -195,13 +199,13 @@ table(Mortalidad1$mes)
 ## **Relación entre variable cuantitativa y factores usando gráficas**
 
 
-### *Boxplot Causa de la mortalidad en la biomasa (toneladas) de Salmo salar entre el 2011 al 2022*
+### *Boxplot causa de la mortalidad en la biomasa (toneladas) de Salmo salar entre el 2011 al 2022*
 
-La biomasa muerta para *S. salar* por causa de bloom de algas ha sido mayor durante los años 2016, 2017 y 2021 en comparasión al oxígeno disuelto, mientras que para los años 2013, 2018, 2019 y 2020 la acción por disminución de oxígeno de disuelto en agua reporta una mayor biomasa muerta (ton) para el barrio en estudio.
+La biomasa muerta para *S. salar* por causa de bloom de algas ha sido mayor durante los años 2016, 2017 y 2021 en comparasión al oxígeno disuelto, mientras que para los años 2013, 2018, 2019 y 2020 la acción por disminución de oxígeno disuelto en agua reporta una mayor biomasa muerta (ton) para el barrio en estudio. La causa de mortalidad por baja de OD ha mostrado una mayor frecuencia de registros, mientras que la acción por bloom de algas a mostrado una mayor ocurrencia en los últimos años, siendo el año 2021 la situacioón que presentó un alata biomasa de mortalidad.
 
-En esta gráfica se identificaron **datos faltantes** para la causa de muerte en peces principalmente por bloom de algas (específicamente años 2011, 2012, 2018 y 2022), en cambio, causa de muerte por baja de OD fue la más frecuente en estos últimos 10 años.
+En esta gráfica se identificaron **datos faltantes** para la causa de muerte en peces, principalmente por bloom de algas (específicamente años 2011, 2012, 2018 y 2022), en cambio, causa de mortalidad por baja de OD ha mostrado mayor frecuencia en estos últimos 10 años.
 
-**Valores atípicos** principalmente para el registro de biomasa muerta por causa de bloom de algas (años 2013, 2015 y 2019). Mientras que para la causa de muerte por oxígeno (OD) sobre la biomasa de *S. salar* se visualizan valores atípicos para los año 2011, 2019 y 2021. Estos valores atípicos demostraron ser casos puntuales en mortalidades de peces siendo posiblemente relacionado con el periodo y ocurrencia de baja de OD o presencia de bloom de algas. Si bien, es un registro estimado de mortalidad por centro (de acuerdo al peso (g) y número de individuos muertos por diferentes causas temporales de OD y bloom de algas), es probable que existan errores en la toma de datos, pero en base a las ordenes de magnitud existe coherencia de eventos puntuales de mortalidad transformarse en outliers dentro de los registros para el barrio. 
+En cuanto a **valores atípicos**, principalmente se observan registros de biomasa muerta por causa bloom de algas escapándose del gráfico de cajas y bigotes, siendo estos durante los años 2013, 2015 y 2019. Mientras que para la causa de muerte por oxígeno disuelto (OD) se visualizan **valores atípicos** para los año 2011, 2019 y 2021. Estos valores atípicos demostraron ser casos puntuales en mortalidad en peces siendo posiblemente relacionado con el periodo y ocurrencia de baja de OD o presencia de bloom de algas. Si bien, es un registro estimado de mortalidad por centro, es probable que existan errores en la toma de datos, ya que su estimación se basa en el peso y numero de individuos global existentes en jaulas afectadas, no obstante, en base a las ordenes de magnitud permite tener una idea general del problema que afecta a los centros de cultivos presentes en el barrio. 
 
 
 ```{r boxplot biomasa muerta por Causa anual, echo=TRUE}
@@ -210,11 +214,9 @@ Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_b
 
 
 
-### *Boxplot Causa de mortalidad en S. salar entre los años 2011 al 2022*
+### *Boxplot causa de mortalidad en S. salar entre los años 2011 al 2022*
 
-Al agrupar los años, la mortalidad en *S. salar* no muestra un patrón que diferencie el tipo de mortalidad entre el periodo 2011 al 2022, siendo la mediana, cuartiles y bigotes similares entre ambos boxplot. No obstante, se observan en esta gráfica valores atípicos para ambas causas de mortalidad, siendo mayores para el caso de mortalidad por la acción de bloom de algas, esto quiere decir que existe un mayor número de peces muertos debido a esta causa dentro del barrio. 
-
-Para esta gráfica boxplot donde se compara la causa de muerte, agrupando los años desde el 2011 al 2022, se observan datos atípicos para las muertes por bloom de algas y OD. Mayor cantidad de datos atípicos son reportados para la causa por bloom de algas, probablemente siendo una consecuencia de eventos puntuales de mortalidad en el barrio. En general, los valores atípicos estan inclunados a un mayor número de muertos por ambas causas.
+Al agrupar los años, la mortalidad en *S. salar* no muestra un patrón que diferencie el tipo de mortalidad entre el periodo 2011 al 2022, siendo la mediana, cuartiles y bigotes similares entre ambos boxplot. No obstante, se observan en esta gráfica **valores atípicos** para ambas causas de mortalidad, siendo mayores para el caso de mortalidad por la acción de bloom de algas, esto quiere decir, que existe un mayor número de peces muertos que se escapan de la media debido al bloom de algas dentro del barrio en estudio. Adicionalmente, mediante esta gráfica se observa que los **valores atípicos** estan inclunados a un mayor número de muertos causado por bloom y OD. 
 
 ```{r boxplot biomasa muerta por Causa, echo=TRUE}
 Mortalidad1 %>% mutate(log_Muertos= log(Muertos)) %>% ggplot(aes(x= Causa, y= log_Muertos, fill= Causa)) + geom_boxplot() + labs( title = "Causa de mortalidad en S. salar entre el 2011 al 2022") + theme_bw()
@@ -222,12 +224,9 @@ Mortalidad1 %>% mutate(log_Muertos= log(Muertos)) %>% ggplot(aes(x= Causa, y= lo
 
 
 
-### *Relación de variable y factores*
+### *Relación entre las causas de mortalidad por bloom y oxígeno disuelto*
 
-
-#### *_Relación entre las causas de mortalidad por bloom y oxígeno disuelto_*
-
-La relación entre las causas de mortalidad por bloom y oxígeno disuelto muestra un patrón de dispersión de la información entre los años 2011 a 2022, sin cumplir un linearidad que relacione directamente la causa de muerte por bloom de algas y el decaimiento del OD.
+La relación entre las causas de mortalidad por bloom y oxígeno disuelto muestra una dispersión de la información entre los años 2011 a 2022. No se observa una relación directa o linealidad entre ambas causas de muerte en salmones.
 
 ```{r relación mortalidad por bloom y OD, echo=TRUE}
 
@@ -240,24 +239,31 @@ bloom_OD %>% ggplot(aes(x= log_biomasa_OD, y=log_biomasa_bloom))+ geom_point(sha
 
 #### *_Relación biomasa muerta según el tiempo_*
 
-No se observa un patrón claro que diferencie la mortalidad causada por bloom de algas y disminución de oxígeno cuando se analiza la variable temporal por semana y mes para el barrio de estudio entre el periodo 2011 al 2022. Casos puntuales son observados para el mes 4 con una alta biomasa muerta de peces siendo causa principal el bloom de algas (año 2021). En tanto, al analizar por semana la biomasa muerta de *Salmo salar* sólo se observa este aumento de mortalidad por causa de bloom de algas para las semana primeras semans (mes 4) del año 2021, demostrando ser un evento puntual para la causa de mortalidad por bloom. 
+No se observa un patrón claro que diferencie la mortalidad causada por bloom de algas y disminución de oxígeno disuelto cuando se analiza la variable temporal por semana y mes para el barrio en estudio entre el periodo 2011 al 2022. Casos puntuales son observados para el mes 4 con una alta biomasa muerta de peces siendo causa principal el bloom de algas (año 2021). Esta evidencia gráfica podría estar mostrando la ocurrencia de un evento temporal puntual que genera una alta mortalidad en la biomasa de salmones. 
 
-Al realizar un zoom sobre los registros de mortalidad dentro del año 2021 se oberserva una mayor frecuencia y reporte de mortalidad por causa de OD, sin fluctuar }y presentar registros atípicos de mortalidad por esta causa. Sin embargo, para ese año la mayor biomasa de salmones muertos fue afectada por la acción de bloom de algas, siendo la mayor mortalidad registrada históricamente en este barrio con un log biomasa muerta > 5.  
-
-```{r Correlación biomasa muerta según causa, echo=TRUE}
+```{r Correlación biomasa muerta por mes, echo=TRUE}
 Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_biomasa= log(Biomasa_ton)) %>% ggplot(aes(x= mes, y=log_biomasa, color= Causa))+ geom_point(size=1) + labs(x= "Mes", y= "Log biomasa muerta (ton)")+ theme_gray() + labs( title = "Relación biomasa muerta (ton) por mes") + theme_bw()
 
-Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_biomasa= log(Biomasa_ton)) %>% ggplot(aes(x= Nro, y=log_biomasa, color= Causa))+ geom_point(size=1) + labs(x= "Semanas correlativas", y= "Log biomasa muerta (ton)")+ theme_gray() + labs( title = "Relación biomasa muerta (ton) por semana, periodo 2011-2022") + theme_bw() + scale_y_continuous(limits = c(-8,8))
-
-#Zoom para el años 2021
-Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_biomasa= log(Biomasa_ton)) %>% ggplot(aes(x= Nro, y=log_biomasa, color= Causa))+ geom_point(size=1) + labs(x= "Semanas correlativas", y= "Log biomasa muerta (ton)")+ theme_gray() + labs( title = "Relación biomasa muerta (ton) por semana (año 2021)") + theme_bw() + scale_y_continuous(limits = c(-8,8)) + scale_x_continuous(limits = c(750, 1069))
 ```
 
+
+Al realizar un zoom sobre los registros de mortalidad dentro del año 2021 se oberserva una mayor frecuencia y reporte de mortalidad por causa de OD, sin cambios bruscos (registros atípicos) a los largo de las semanas. Sin embargo, si se observa que para este año 2021 ocurrio que la mayor biomasa de salmones muertos fue afectada por la acción de bloom de algas, siendo la mayor mortalidad registrada históricamente en este barrio (log biomasa muerta > 5).  
+
+```{r Correlación biomasa muerta por semanas, echo=TRUE}
+
+mes1 <- Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_biomasa= log(Biomasa_ton)) %>% ggplot(aes(x= Nro, y=log_biomasa, color= Causa))+ geom_point(size=1) + labs(x= "Semanas correlativas", y= "Log biomasa muerta (ton)")+ theme_gray() + labs( title = "Relación biomasa muerta (ton) por semana, periodo 2011-2022") + theme_bw() + scale_y_continuous(limits = c(-8,8))
+
+#Zoom para el años 2021
+mes2 <- Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_biomasa= log(Biomasa_ton)) %>% ggplot(aes(x= Nro, y=log_biomasa, color= Causa))+ geom_point(size=1) + labs(x= "Semanas correlativas", y= "Log biomasa muerta (ton)")+ theme_gray() + labs( title = "Relación biomasa muerta (ton) por semana (año 2021)") + theme_bw() + scale_y_continuous(limits = c(-8,8)) + scale_x_continuous(limits = c(750, 1069))
+
+grid.arrange(mes1, mes2, ncol = 1, nrow = 2)
+
+```
 
 
 #### *_Relación peces muertos y peso entre los años 2011 a 2022_*
 
-Salmones de mayor peso (g) registraron un elevado número mortalidades a causa de bloom de algas y oxígeno disuelto durante el periodo 2011 al 2022 para el barrio en estudio.
+Salmones con mayor peso (g) registraron un elevado número mortalidad por causa de bloom de algas y oxígeno disuelto durante el periodo 2011 al 2022 para el barrio en estudio.
 
 ```{r}
 Mortalidad1 %>% mutate(log_peso= log(Peso_g)) %>% mutate(log_muertos= log(Muertos)) %>% ggplot(aes(x= log_peso, y= log_muertos, color=Causa))+ geom_point(size=1) + labs(x= "Log Peso (g)", y= "Log muertos")+ theme_gray() + labs( title = "Relación peso de salmones y número de muertos entre el 2011 al 2022") + theme_bw()
@@ -267,47 +273,79 @@ Mortalidad1 %>% mutate(log_peso= log(Peso_g)) %>% mutate(log_muertos= log(Muerto
 
 ## **Resumen de datos mediante tablas y estadística descriptiva**
 
-### *Estadística descriptiva*
+### *Estadística descriptiva y tablas resumen*
 
-La estadística descriptiva muestra que entre los años 2011 al 2022 la biomasa muerta promedio para el barrio en estudio fue de 7.6 toneladas (mediana equivalente a 0.44 ton), alcanzando un máximo de 1031 toneladas de salmones muertos. El registro total de observaciones fue de 1224.
+La estadística descriptiva muestra que al agrupar la información por causa de muerte entre los años 2011 al 2022 el mayor número de registros son debido a las bajas de OD en agua, no obstante, la mayor biomasa muerta (ton) ha sido registrada por la acción de bloom de algas, alcanzando en promedio 16 toneladas de peces muertos (desviación estantandar = 82 ton; rango 0.003 a 1031 ton). Mientras tanto, la mortalidad por causa del OD tuvo en promedio 4.1 toneladas de salmones muertos (desviación estantandar = 16 ton; rango 0.0004 a 316 ton) para estos últimos 10 años. Las medianas calculadas para las mortalidades por bloom y OD fueron de 0.45 y 0.43, respectivamente) (Tabla 1).
 
 ```{r estadísitica descriptiva biomasa muerta en registro histórico, echo=TRUE}
-Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% summarize(n(), mean(Biomasa_ton), median(Biomasa_ton), max(Biomasa_ton))
+Tabla_causa <- Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% group_by(Causa) %>% summarize("N"= n(), "Promedio"= mean(Biomasa_ton), "DE"= sd(Biomasa_ton),"Mediana"= median(Biomasa_ton), "Mín"= min(Biomasa_ton), "Máx"= max(Biomasa_ton))
+
+kbl(Tabla_causa, caption = "Tabla 1. Resumen de la biomasa muerta (toneladas) para la especie S. salar por causa entre los años 2011 al 2021") %>% kable_classic_2()
 ```
 
-Con respecto al número de salmones muertos para este registro histórico se obtuvo en promedio 3352 peces (mediana 155 muertos), con un rango que va desde 1 a 463152 salmones muertos. El registro total de observaciones fue de 1224.
 
-```{r descripción variable número de muertos en registro histórico, echo=TRUE}
-Mortalidad1 %>% summarize(n(), mean(Muertos), median(Muertos), min(Muertos), max(Muertos))
-```
-
-Finalmente, en relación al peso del salmon del Atlántico (*S. salar*) muerto en función del tipo de mortalidad (bloom y OD) se obtuvo en promedio los salmones presentaron un peso de 3 kg, con una desviación estándar de 1.5 kg para el periodo comprendido entre los años 2011 al 2022.
+En relación al peso del salmon del Atlántico (*S. salar*) que presentó muerte por causa de bloom y OD tuvo en promedio 3.1 kg, con una desviación estándar de 1.5 kg, siendo el peso máximo de las mortalidades registradas de 6,4 kg entre los años 2011 al 2022 (Tabla 2).
 
 ```{r descripción variable peso, echo=TRUE}
-Mortalidad1 %>% summarize(n(), mean(Peso_g), sd(Peso_g), median(Peso_g))
+Tabla_peso <- Mortalidad1 %>% summarize(n(), mean(Peso_g), sd(Peso_g), max(Peso_g))
+
+kbl(Tabla_peso, caption = "Tabla 2. Resumen del peso (g) en S. salar cuando se registró su muerte entre los años 2011 a 2022") %>% kable_classic_2()
+```
+
+
+Para resumir la biomasa muerta de *S. salar* a causa del bloom de algas y oxígeno disuelto en su conjunto dentro se generaron tablas que muestran el registro por centro, mes y año. 
+
+
+### *Biomasa muerta por Centro**
+
+Dentro del análisis descriptivo por centro de cultivo se observa que en promedio la mayor biomasa muerta en estos últimos 10 años se registra para CM0235, CM0740 y CM0778 (> 10 ton). Para el caso de los dos primeros centros (CM0235 y CM0740) se visualiza un alto número de reportes por mortalidad (biomasa muerta) en comparación al resto de los centros de cultivo presentes en el área de estudio (Tabla 3).
+
+```{r resumen datos descriptivos para la mortalidad de S. salar por centro, echo=TRUE}
+Tabla_centro <- Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% group_by(centro_id) %>% summarize("N"= n(), "Promedio"= mean(Biomasa_ton), "DE"= sd(Biomasa_ton), "Mín"= min(Biomasa_ton), "Máx"= max(Biomasa_ton))
+
+kbl(Tabla_centro, caption = "Tabla 3. Resumen de la biomasa muerta (toneladas) por cada centro de cultivo presente en el barrio entre los años 2011-2022") %>% kable_classic_2()
 ```
 
 
 
-## *Tablas*
+### *Biomasa muerta por mes**
 
-Debido al alto número de registros históricos (n= 1224) por centro para el barrio en estudio se generó una tabla dinámica mediante la función DT::datatable() lo cual permite realizar búsquedas de información específica dentro de la base de datos *Mortalidad1* (**Tabla 1**).
+En este análisis descriptivo es posible observar que la mayor biomasa muerta dentro del barrio ocurrió en el mes 4 con un promedio de 30 (desviación estándar = 116; rango= 0.0005 - 1031) toneladas. Para el mes 7 fue donde se reportó la menor biomasa muerta (ton) dentro de estos últimos 10 años con un promedio de 0.8 toneladas (Tabla 4). 
+
+```{r resumen datos descriptivos para la mortalidad de S. salar por mes, echo=TRUE}
+Tabla_mes <- Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% group_by(mes) %>% summarize("N"= n(), "Promedio"= mean(Biomasa_ton), "DE"= sd(Biomasa_ton), "Mín"= min(Biomasa_ton), "Máx"= max(Biomasa_ton))
+
+kbl(Tabla_mes, caption = "Tabla 4. Resumen de la biomasa muerta (toneladas) por cada mes entre los años 2011-2022") %>% kable_classic_2()
+```
+
+
+
+### *Biomasa muerta por año**
+
+Se observa que el año 2021 existió una mayor biomasa muerta dentro del barrio en estudio con un promedio de 15.8 toneladas y un número de registros de 346. Por otro lado, para el año 2018 se observa una alta biomasa muerta (promedio 8 toneladas) con solo 2 registros dentro del barrio (Tabla 5).
+
+```{r resumen datos descriptivos para la mortalidad de S. salar por año, echo=TRUE}
+Tabla_año <- Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% group_by(año) %>% summarize("N"= n(), "Promedio"= mean(Biomasa_ton), "DE"= sd(Biomasa_ton), "Mín"= min(Biomasa_ton), "Máx"= max(Biomasa_ton))
+
+kbl(Tabla_año, caption = "Tabla 5. Resumen de la biomasa muerta (toneladas) por cada año") %>% kable_classic_2()
+```
+
+
+
+### *Tabla dinámica DT()**
+
+Debido al alto número de registros históricos (n= 1224) por centro para el barrio en estudio se generó una tabla dinámica mediante la función DT::datatable() lo cual permitirá realizar búsquedas de información específica dentro de la base de datos *Mortalidad1*.
 
 ```{r tabla de datos Mortalidad1, echo=TRUE}
-DT::datatable(Mortalidad1, caption = "Tabla 1. Mortalidad en Salmo salar entre los años 2011 al 2022 según registro por causa (bloom de algas y oxígeno disuelto)")
+DT::datatable(Mortalidad1, caption = "Tabla 6. Mortalidad en Salmo salar entre los años 2011 al 2022 según registro por causa (bloom de algas y oxígeno disuelto)")
 ```
 
 
-Para resumir la biomasa muerta de *S. salar* a causa del bloom de algas y oxígeno disuelto para el barrio en estudio se generó un nuevo objeto llamado *Mortalidad2*. Para este nuevo objeto se realizó estadísitica descriptiva de los datos, calculándose el número de observaciones (23 centros de cultivos en el barrio), promedio de la biomasa muerta (ton), desviación estándar (DE) y los rangos mínimos y máximos de biomasa muerta por centro dentro del barrio.
 
-```{r resumen datos descriptivos para la muertalidad de S. salar por centro, echo=TRUE}
-Mortalidad2 <- Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% select(centro_id, Biomasa_ton) %>% group_by(centro_id) %>% summarize("N"= n(), "Promedio"= mean(Biomasa_ton), "DE"= sd(Biomasa_ton), "Mín"= min(Biomasa_ton), "Máx"= max(Biomasa_ton))
-```
+# **Análisis estadístico de datos sobre la mortalidad en *Salmo salar* a causa de los factores bloom de algas y oxígeno disuelto**
+
+## **Modelo lineal**
 
 
-En base la descripción estadística realizada para el objeto *Mortalidad2* se elaboró una nueva tabla con la función kbl(), la cual resume cada parámetro sobre la biomasa muerta (ton) a causa de los factores bloom y oxígeno disuelto por cada centro presente en el barrio (**Tabla 2**).
 
-```{r tabla resumen con kbl, echo=TRUE}
-kbl(Mortalidad2, caption = "Tabla 2. Resumen de la biomasa muerta (toneladas) para la especie S. salar por cada centro de cultivo presente en el barrio entre los años 2011-2022") %>% kable_classic_2()
-```
 
