@@ -13,7 +13,7 @@ La variable en estudio fue la biomasa de peces muertos (toneladas) de la especie
 ## Métodos estadísticos aplicados, hipótesis y conclusión principal
 Para este estudio se aplicó regresión lineal simple y múltiple definiendo modelos ajustados mediante el análisis de varianza de los datos. En primera instancia, se realizó ANOVA de una vía con un criterio de clasificación, obteniendo modelos de regresión lineal simple con los factores centro, semana y año. En estos modelos de regresión simple se postuló la siguiente hipotesis:
 
-**Hipótesis nula (H0)**: Existe similitud en la biomasa entre centros/semanas/años
+**Hipótesis nula (H0)**: Existe similitud en la biomasa entre centros/semanas/años.
 **Hipótesis alternativa (H1)**: No existe similitud en la biomasa muerta entre centros/semanas/años.
 
 Los resultados de esta modelación (para cada una de los factores) fueron significativamente menor al 5%, por lo tanto, se rechazó la hipotesis nula que postulaba similitud en la biomasa muerta para los factor centro, semanas y años, modelados independientemente. 
