@@ -410,6 +410,7 @@ Mediante un analisis de covarianza se investigó la relación entre la biomasa m
 ## **~H1~**: $$ \beta_{j} \ne 0 ; j= 1,2,..., k $$
 
 
+
 #### Ajuste del modelo múltiple y evaluación de supuestos
 
 El modelo cumple con los tres supuestos: linealidad, homogeneidad de varianza y normalidad. Por otro lado este modelo nos estrega como resultado coeficientes distintos de cero, por lo tanto, se rechaza la HO (valores p menores al 5%). El R2 ajustado de esta modelación múltiple correspondió al 23%. 
