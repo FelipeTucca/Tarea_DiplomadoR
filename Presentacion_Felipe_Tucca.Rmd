@@ -37,9 +37,9 @@ library(car)
 
 **1).** **Introducción**
 
-- Descripción de la problemática
+- Descripción de la problemática.
 
-- Variables de estudio y número de observaciones
+- Variables de estudio y número de observaciones.
 
 **2).** **Análisis exploratorio de los datos**
 
@@ -49,9 +49,9 @@ library(car)
 
 **3).** **Análisis estadísitico de los datos**
 
-- Modelos lineales simples y múltiple
+- Modelos lineales simples y múltiple.
 
-- Comparación de modelos RSS-AIC
+- Comparación de modelos RSS-AIC.
 
 **4).** **Interpretación y conclusiones del trabajo**
 
@@ -61,7 +61,7 @@ library(car)
 
 **1).** **Descripción de la problemática**
 
-- Base de datos presenta registros de mortalidad por causa **bloom de algas y disminución de oxígeno disuelto (OD)** 
+- Base de datos presenta registros de mortalidad por causa **bloom de algas y disminución de oxígeno disuelto (OD)**. 
 
 - 23 centros de cultivos reportaron la causal de mortalidad en salmón para un barrio de la Región de Los Lagos.
 
@@ -102,6 +102,7 @@ knitr::include_graphics("Histograma_biomasa_muerta_causa.png")
 ## **Análisis exploratorio de los datos: Boxplot**
 
 - Datos faltantes para la causa de mortalidad por bloom entre el periodo 2011 a 2022.
+
 - Valores atípicos presente en las dos causas de mortalidad.
 
 ```{r, echo = FALSE, out.width= '75%', fig.align='center', fig.cap= "Boxplot biomasa muerta por año y causa"}
@@ -113,7 +114,9 @@ knitr::include_graphics("boxplot_biomasa_muerta_año.png")
 ## **Análisis exploratorio de los datos: Plot**
 
 - Evidencia sobre la ocurrencia de un evento temporal puntual que generó una alta mortalidad en la biomasa de salmones.
+
 - Año 2021 presentó la mayor biomasa de salmones muertos siendo afectada por la **acción de bloom de algas**.
+
 - Año 2021 presentó la mayor mortalidad registrada históricamente en este barrio (log biomasa muerta > 5).
 
 ```{r, echo = FALSE, out.width= '75%', fig.align='center', fig.cap= "Biomasa muerta por semana y causa"}
@@ -152,9 +155,9 @@ kbl(Tabla_causa, caption = "Tabla 1. Resumen de la biomasa muerta (toneladas) pa
 
 - Basado en estos modelos de regresión simple se rechaza hipótesis nula que postulaba: 
 
-**Hipótesis nula (H_{0})**: Existe similitud en la biomasa muerta entre centros/semanas/años.
+**Hipótesis nula (H0)**: Existe similitud en la biomasa muerta entre centros/semanas/años.
 
-**Hipótesis alternativa (H_{1})**: No existe similitud en la biomasa muerta entre centros/semanas/años.
+**Hipótesis alternativa (H1)**: No existe similitud en la biomasa muerta entre centros/semanas/años.
 
 
 
