@@ -72,13 +72,11 @@ library(car)
 - Variables de estudio: Causa, peso (g), años, mes, semana e identificación de centro de cultivo.
 
 
-
 ## **Objetivos del estudio**
 
 - Evaluar la causa de mortalidad por bloom de algas y OD sobre la especie *Salmo salar* para un barrio del sur de Chile entre los años 2011 a inicios del 2022. 
 
 - Generar un modelo lineal que mejor ajuste la predicción de mortalidad en la biomasa de salmones.
-
 
 
 ## **Análisis exploratorio de los datos: Histograma**
@@ -91,10 +89,9 @@ library(car)
 
 - No existe correlación significativa (p<0.05) entre las causas de muerte por bloom de algas y disminución de oxígeno disuelto.
 
-```{r, echo = FALSE, out.width= '75%', fig.align='center', fig.cap= "Histograma biomasa muerta (toneladas) por causa"}
+```{r, echo = FALSE, out.width= '60%', fig.align='center', fig.cap= "Histograma biomasa muerta (toneladas) por causa"}
 knitr::include_graphics("Histograma_biomasa_muerta_causa.png")
 ```
-
 
 
 ## **Análisis exploratorio de los datos: Boxplot**
@@ -103,10 +100,9 @@ knitr::include_graphics("Histograma_biomasa_muerta_causa.png")
 
 - Valores atípicos presente en las dos causas de mortalidad.
 
-```{r, echo = FALSE, out.width= '75%', fig.align='center', fig.cap= "Boxplot biomasa muerta por año y causa"}
+```{r, echo = FALSE, out.width= '60%', fig.align='center', fig.cap= "Boxplot biomasa muerta por año y causa"}
 knitr::include_graphics("boxplot_biomasa_muerta_año.png")
 ```
-
 
 
 ## **Análisis exploratorio de los datos: Plot**
@@ -117,7 +113,7 @@ knitr::include_graphics("boxplot_biomasa_muerta_año.png")
 
 - Año 2021 presentó la mayor mortalidad registrada históricamente en este barrio (log biomasa muerta > 5).
 
-```{r, echo = FALSE, out.width= '75%', fig.align='center', fig.cap= "Biomasa muerta por semana y causa"}
+```{r, echo = FALSE, out.width= '50%', fig.align='center', fig.cap= "Biomasa muerta por semana y causa"}
 knitr::include_graphics("Biomasa_muerta_semana_causa.png")
 ```
 
@@ -131,7 +127,7 @@ knitr::include_graphics("Biomasa_muerta_semana_causa.png")
 
 - Peso promedio de los salmnes muertos fue de 3.1 kilogramos.
 
-```{r, message=FALSE, out.width= '75%', fig.align='center'}
+```{r, message=FALSE, out.width= '50%', fig.align='center'}
 Mortalidad <- read_excel("Mortalidad.xlsx")
 Mortalidad$centro_id <- as.factor(Mortalidad$centro_id)
 Mortalidad$año <- as.factor(Mortalidad$año)
@@ -142,7 +138,6 @@ Tabla_causa <- Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %
 
 kbl(Tabla_causa, caption = "Tabla 1. Resumen de la biomasa muerta (toneladas) para la especie S. salar por causa entre los años 2011 al 2021") %>% kable_classic_2()
 ```
-
 
 
 ## **Análisis estadísitico de los datos: Modelo lineal simple**
@@ -158,7 +153,6 @@ kbl(Tabla_causa, caption = "Tabla 1. Resumen de la biomasa muerta (toneladas) pa
 **Hipótesis alternativa (H1)**: No existe similitud en la biomasa muerta entre centros/semanas/años.
 
 
-
 ## **Análisis estadísitico de los datos: Hipótesis modelo lineal múltiple**
 
 - Para el **modelo de regresión múltiple** se postularon las siguientes hipótesis:
@@ -168,7 +162,6 @@ kbl(Tabla_causa, caption = "Tabla 1. Resumen de la biomasa muerta (toneladas) pa
 **~H1~**: $ \beta_{j} \ne 0 ; j= 1,2,..., k $
 
 - El modelo cumplió con los tres supuestos: linealidad, homogeneidad de varianza y normalidad. 
-
 
 
 ## **Análisis estadísitico de los datos: Ajuste modelo lineal múltiple**
@@ -186,7 +179,6 @@ anova(lm.aov_biomasa)
 ```
 
 
-
 ## **Comparación de modelos por RSS y AIC**
 
 - Crietrios de anova de residuales (RSS) y Akaike Information Criterion (AIC)
@@ -201,7 +193,6 @@ anova(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_bio
 AIC <- AIC(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% pander()
 AIC
 ```
-
 
 
 ## **Interpretación y conclusiones del trabajo**
