@@ -10,6 +10,7 @@ beamer_presentation:
   includes:
     in_header: mystyle.tex
     slidy_presentation: default
+    ioslides_presentation: default 
 subtitle: Mortalidad de salmón del Atlántico por causa de bloom de algas y oxígeno disuelto para un barrio del sur de Chile
 institute: Instituto Tecnológico del Salmón (INTESAL)
 ---
