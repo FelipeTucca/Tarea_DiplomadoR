@@ -65,7 +65,9 @@ library(readxl)
 
 ## **Análisis exploratorio de los datos**
 
-**Histograma**
+**Histograma biomasa muerta por causa**
+
+Entre los periodos 2011 a 2022 existe una mayor biomasa muerta (ton) de *S. salar* en el barrio por causa de la acción de bloom de algas
 
 ```{r, echo = FALSE, out.width= '90%', fig.align='center', fig.cap= "Histograma biomasa muerta (toneladas) por causa"}
 knitr::include_graphics("Histograma_biomasa_muerta_causa.png")
