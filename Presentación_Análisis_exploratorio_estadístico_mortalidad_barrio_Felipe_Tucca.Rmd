@@ -1,26 +1,56 @@
 ---
 title: "Presentación Análisis Exploratorio y Estadístico de datos"
-subtitle: 'Mortalidad de *Salmo salar* por causa de bloom de algas y oxígeno disuelto para un barrio del sur de Chile'
-author: "Felipe Tucca"
+subtitle: Mortalidad de *Salmo salar* por causa de bloom de algas y oxígeno disuelto para un barrio del sur de Chile
+author: "Felipe Tucca Díaz"
 institute: Instituto Tecnológico del Salmón (INTESAL)
-date: '2022-06-29'
-output: beamer_presentation
-  theme: "CambridgeUS"
-    colortheme: "dolphin"
-      fonttheme: "professionalfonts"
-      includes:
-        in_header: mystyle.tex
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output: 
+beamer_presentation:
+  theme: CambridgeUS
+  colortheme: dolphin
+  fonttheme: professionalfonts
+  includes:
+    in_header: mystyle.tex
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, comment= TRUE}
 knitr::opts_chunk$set(echo = FALSE)
+
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(dplyr)
+library(readxl)
+
 ```
 
-## R Markdown
+## Estructura del trabajo exploratorio y estadístico
 
-This is an R Markdown presentation. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+**1).** **Introducción**
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+- Descripción de la problemática
+
+- Variables de estudio y número de observaciones
+
+**2).** **Análisis exploratorio de los datos**
+
+- Histogramas biomasa muerta por causa
+
+- Boxplot biomasa muerta por causa para los últimos 10 años
+
+- Tablas de frecuencias
+
+- Correlación entre causa de mortalidad en salmón
+
+
+**3).** **Análisis estadísitico de los datos
+
+- Modelos lineales simples y múltiple
+
+- Comparación de modelos
+
+**4).** **Interpretación y conclusiones del trabajo**
+
 
 ## Slide with Bullets
 
