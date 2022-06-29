@@ -13,8 +13,8 @@ La variable en estudio fue la biomasa de peces muertos (toneladas) de la especie
 ## Métodos estadísticos aplicados, hipótesis y conclusión principal
 Para este estudio se aplicó regresión lineal simple y múltiple definiendo modelos ajustados mediante el análisis de varianza de los datos. En primera instancia, se realizó ANOVA de una vía con un criterio de clasificación, obteniendo modelos de regresión lineal simple con los factores centro, semana y año. En estos modelos de regresión simple se postuló la siguiente hipotesis:
 
-**~Hipótesis nula (H0)~**: Existe similitud en la biomasa entre centros/semanas/años
-**~Hipótesis alternativa (H1)~**: No existe similitud en la biomasa muerta entre centros/semanas/años.
+**Hipótesis nula (H0)**: Existe similitud en la biomasa entre centros/semanas/años
+**Hipótesis alternativa (H1)**: No existe similitud en la biomasa muerta entre centros/semanas/años.
 
 Los resultados de esta modelación (para cada una de los factores) fueron significativamente menor al 5%, por lo tanto, se rechazó la hipotesis nula que postulaba similitud en la biomasa muerta para los factor centro, semanas y años, modelados independientemente. 
 
@@ -22,8 +22,8 @@ Por otro lado, un modelo de regresión lineal múltiple fue realizado para evalu
 
 Para este modelo de regresión múltiple se postularon las siguietes hipótesis:
 
-**~Hipótesis nula (HO)~**: Los coeficientes (Beta0, Beta1,..., Bn) son iguales a cero. 
-**~Hipótesis alternativa (H1)~**: Los coeficientes (Beta0, Beta1,..., Bn) son distintos de cero.
+**Hipótesis nula (HO)**: Los coeficientes (Beta0, Beta1,..., Bn) son iguales a cero. 
+**Hipótesis alternativa (H1)**: Los coeficientes (Beta0, Beta1,..., Bn) son distintos de cero.
 
 Con este análisis de regresión se rechazó la hipótesis nula (H0) obteniendose un nivel de siginificancia del conjunto de variables menor al 5%. En cuanto al análisis de covarianza el modelo representó un **23%** del ajuste de la predicción para la variable biomasa muerta, las cuales fueron definidas por causa, centro de cultivo, mes y año. El p valor del modelo en su conjunto fue de 2.2e-16, por lo tanto, el modelo nos permite predecir biomasa muerta en función de las variables antes mencionadas.
 
