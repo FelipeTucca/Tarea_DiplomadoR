@@ -11,7 +11,7 @@ output:
     fonttheme: proffesionalfonts
     includes:
       in_header: mystyle.tex
-subtitle: Mortalidad de salmón del Atlántico por causa de bloom de algas y oxígeno disuelto para un barrio de la región de Los Lagos
+subtitle: Mortalidad de salmón del Atlántico por causa de bloom de algas y oxígeno disuelto
 institute: Instituto Tecnológico del Salmón (INTESAL)
 ---
 
