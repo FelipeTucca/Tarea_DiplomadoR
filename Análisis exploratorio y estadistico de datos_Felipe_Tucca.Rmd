@@ -402,6 +402,7 @@ DT::datatable(Mortalidad1, caption = "Tabla 6. Mortalidad en Salmo salar entre l
 
 Mediante un analisis de covarianza se investigó la relación entre la biomasa muerta de salmones y los factores causa, centro de cultivo mes y año. Para ello se formularon las siguientes hipótesis:
 
+
 #### Formulación de la hipótesis 
 
 ## **~H0~**: $$ \beta_{j} = 0 ; j= 1,2,..., k $$
