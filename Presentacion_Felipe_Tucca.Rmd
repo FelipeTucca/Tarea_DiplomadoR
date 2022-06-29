@@ -1,8 +1,8 @@
 ---
-title: "Presentación análisis exploratorio y estadistico de los datos"
-author: "Felipe Tucca Díaz"
-date: "`r Sys.Date()`"
-  output:
+title: "Análisis Exploratorio y Estadístico de Datos"
+author: "Felipe Tucca"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+output:
   ioslides_presentation: default
   beamer_presentation:
     theme: CambridgeUS
@@ -11,8 +11,8 @@ date: "`r Sys.Date()`"
     includes:
       in_header: mystyle.tex
   slidy_presentation: default
-subtitle: Diplomado en Análisis de datos con R para la Acuicultura.
-institute: Pontificia Universidad Católica de Valparaíso
+subtitle: Mortalidad de salmón del Atlántico por causa de bloom y OD
+institute: Instituto Tecnológico del Salmón
 ---
 
 ```{r setup, include=FALSE, comment=TRUE}
