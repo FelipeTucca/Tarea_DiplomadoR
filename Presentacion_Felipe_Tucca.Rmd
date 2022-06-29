@@ -2,17 +2,17 @@
 title: "Presentación análisis exploratorio y estadistico de los datos"
 author: "Felipe Tucca Díaz"
 date: "`r Sys.Date()`"
-output: 
-  beamer_presentation: 
+  output:
+  ioslides_presentation: default
+  beamer_presentation:
     theme: CambridgeUS
     colortheme: dolphin
-    fonttheme: proffesionalfonts
+    fonttheme: professionalfonts
     includes:
       in_header: mystyle.tex
   slidy_presentation: default
-  ioslides_presentation: default 
-subtitle: Mortalidad de salmón del Atlántico por causa de bloom de algas y oxígeno disuelto
-institute: Instituto Tecnológico del Salmón (INTESAL)
+subtitle: Diplomado en Análisis de datos con R para la Acuicultura.
+institute: Pontificia Universidad Católica de Valparaíso
 ---
 
 ```{r setup, include=FALSE, comment=TRUE}
