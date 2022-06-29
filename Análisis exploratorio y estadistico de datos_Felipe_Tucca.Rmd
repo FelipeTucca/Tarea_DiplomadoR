@@ -3,9 +3,9 @@ title: "Análisis exploratorio y estadísitico de datos"
 author: "Felipe Tucca Díaz"
 date: '2022-06-26'
 output:
-  pdf_document: default
-  word_document: default
   html_document: default
+  word_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -207,7 +207,7 @@ La biomasa muerta para *S. salar* por causa de bloom de algas ha sido mayor dura
 
 En esta gráfica se identificaron **datos faltantes** para la causa de muerte en peces, principalmente por bloom de algas (específicamente años 2011, 2012, 2018 y 2022), en cambio, causa de mortalidad por baja de OD ha mostrado mayor frecuencia en estos últimos 10 años.
 
-En cuanto a **valores atípicos**, principalmente se observan registros de biomasa muerta por causa bloom de algas escapándose del gráfico de cajas y bigotes, siendo estos durante los años 2013, 2015 y 2019. Mientras que para la causa de muerte por oxígeno disuelto (OD) se visualizan **valores atípicos** para los año 2011, 2019 y 2021. Estos valores atípicos demostraron ser casos puntuales en mortalidad en peces siendo posiblemente relacionado con el periodo y ocurrencia de baja de OD o presencia de bloom de algas. Si bien, es un registro estimado de mortalidad por centro, es probable que existan errores en la toma de datos, ya que su estimación se basa en el peso y numero de individuos global existentes en jaulas afectadas, no obstante, en base a las ordenes de magnitud permite tener una idea general del problema que afecta a los centros de cultivos presentes en el barrio. 
+En cuanto a **valores atípicos**, principalmente se observan registros de biomasa muerta por causa bloom de algas escapándose del gráfico de cajas y bigotes, siendo estos durante los años 2013, 2015 y 2019. Mientras que para la causa de muerte por oxígeno disuelto (OD) se visualizan **valores atípicos** para los año 2011, 2019 y 2021. Estos valores atípicos demostraron ser casos puntuales en mortalidad en peces siendo posiblemente relacionado con el periodo y ocurrencia de baja de OD o presencia de bloom de algas. Si bien, es un registro estimado de mortalidad por centro, es probable que existan errores en la toma de datos, ya que su estimación se basa en el peso y número de individuos global existentes en jaulas afectadas, no obstante, en base a las ordenes de magnitud permite tener una idea general del problema que afecta a los centros de cultivos presentes en el barrio. 
 
 
 ```{r boxplot biomasa muerta por causa anual, echo=TRUE}
@@ -239,7 +239,7 @@ bloom_OD %>% ggplot(aes(x= log_biomasa_OD, y=log_biomasa_bloom))+ geom_point(sha
 ```
 
 
-Basándose en una prueba de correlación entre las causas de muerte por bloom de algas y disminución de oxígeno disuelto en los último 10 años dentro del barrio en estudio, se obtuvo que no existe correlación entre variables (valor p mayor al 5%), moestrando a su vez este ajuste lineal una baja correlación del 15%. Por lo tanto se acepta la hipótesisi nula (HO).
+Basándose en una prueba de correlación entre las causas de muerte por bloom de algas y disminución de oxígeno disuelto en los último 10 años dentro del barrio en estudio, se obtuvo que no existe correlación entre variables (valor p mayor al 5%), mostrando a su vez este ajuste lineal una baja correlación del 15%. Por lo tanto, se acepta la hipótesisi nula (HO).
 
 ```{r inferencia estadística, echo=TRUE}
 # Prueba de hipótesis para la correlación entre causas de muerte
@@ -451,7 +451,7 @@ AIC
 
 Para este modelo **se cumplen los 3 supuestos** que ponen a prueba la linealidad, homogeniedad y normalidad de los datos, por lo que fue posible llevar a cabo un análisis de varianza. Por otro lado, el **intercepto (Beta 0) y las pendientes (Beta 1, Beta 2, etc.) fueron significativamente distintas de cero, rechazándose la hipótesis nula (H0) con un nivel de siginificancia menor al 5%**. En cuanto al análisis de covarianza el modelo representa un **23%** del ajuste de la predicción para la variable biomasa muerta, las cuales fueron definidas por causa, centro de cultivo, mes y año. El p valor del modelo en su conjunto fue de 2.2e-16, por lo tanto, el modelo nos permite predecir biomasa muerta en función de las variables antes mencionadas.
 
-Mediante un análisis comparativo por RSS y AIC entre modelos se determinó que la **regresión líneal múltiple (modelo completo) representa una mejor predicción** en comparación a los modelos simples que considera las variables de forma independiente.
+Mediante un análisis comparativo por RSS y AIC entre modelos se determinó que la **regresión lineal múltiple (modelo completo) representa una mejor predicción** en comparación a los modelos simples que considera las variables de forma independiente.
 
 
 
