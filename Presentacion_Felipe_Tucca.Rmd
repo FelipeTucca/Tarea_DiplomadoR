@@ -1,9 +1,7 @@
 ---
-title: "Presentación Análisis Exploratorio y Estadístico de datos"
-subtitle: Mortalidad de *Salmo salar* por causa de bloom de algas y oxígeno disuelto para un barrio del sur de Chile
+title: "Presentación datos"
 author: "Felipe Tucca Díaz"
-institute: Instituto Tecnológico del Salmón (INTESAL)
-date: "`r format(Sys.time(), '%d %B %Y')`"
+date: "`r Sys.Date()`"
 output: 
 beamer_presentation:
   theme: CambridgeUS
@@ -11,6 +9,8 @@ beamer_presentation:
   fonttheme: professionalfonts
   includes:
     in_header: mystyle.tex
+subtitle: Mortalidad de salmón del Atlántico por causa de bloom de algas y oxígeno disuelto para un barrio del sur de Chile
+institute: Instituto Tecnológico del Salmón (INTESAL)
 ---
 
 ```{r setup, include=FALSE, comment= TRUE}
@@ -21,7 +21,6 @@ library(ggplot2)
 library(dplyr)
 library(readxl)
 ```
-
 
 ## **Estructura del trabajo exploratorio y estadístico**
 
@@ -48,33 +47,28 @@ library(readxl)
 ## **Introducción**
 
 **1).** **Descripción de la problemática**
-- Base de datos presenta registros de mortalidad por causa **bloom de algas y 
-disminución de oxígeno disuelto (OD)** 
-- 23 centros de cultivos reportaron la causal de mortalidad en salmón para un 
-barrio de la Región de Los Lagos.
+- Base de datos presenta registros de mortalidad por causa **bloom de algas y disminución de oxígeno disuelto (OD)** 
+- 23 centros de cultivos reportaron la causal de mortalidad en salmón para un barrio de la Región de Los Lagos.
 - *Salmo salar* es la especie más cultivada en este barrio.
 
 **2).** **Variables de estudio y número de observaciones**
-- Los registros corresponden a reportes de mortalidad entre los años 2011 e 
-incio del 2022 (Total de registros= 1224).
-- Variables de estudio: Causa, peso (g), años, mes, semana e identificación 
-de centro de cultivo.
+- Los registros corresponden a reportes de mortalidad entre los años 2011 e incio del 2022 (Total de registros= 1224).
+- Variables de estudio: Causa, peso (g), años, mes, semana e identificación de centro de cultivo.
 
 
 ## **Objetivo del estudio**
 
-- Evaluar la causa de mortalidad por bloom de algas y OD sobre la especie 
-*Salmo salar* para un barrio del sur de Chile entre los años 2011 a inicios del 
-2022. 
+- Evaluar la causa de mortalidad por bloom de algas y OD sobre la especie *Salmo salar* para un barrio del sur de Chile entre los años 2011 a inicios del 2022. 
 
-- Generar un modelo lineal que mejor ajuste la predicción de mortalidad en la
-biomasa de salmones.
+- Generar un modelo lineal que mejor ajuste la predicción de mortalidad en la biomasa de salmones.
 
 
 ## **Análisis exploratorio de los datos**
 
+**Histograma**
+
 ```{r, echo = FALSE, out.width= '90%', fig.align='center', fig.cap= "Histograma biomasa muerta (toneladas) por causa"}
-knitr::include_graphics("Histograma_biomasa_muerta_causa")
+knitr::include_graphics("Histograma_biomasa_muerta_causa.png")
 ```
 
 ## Slide with Plot
