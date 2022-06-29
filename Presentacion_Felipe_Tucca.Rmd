@@ -183,11 +183,11 @@ anova(lm.aov_biomasa)
 
 - Ambos criterios sugieren al modelo lineal múltiple con la mejor predicción y ajuste (23%).
 
-```{r message=FALSE, out.width= '75%', fig.align='left'}
+```{r, out.width= '75%', fig.align='left'}
 anova(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% pander()
 ```
 
-```{r message=FALSE, out.width= '75%', fig.align='right'}
+```{r, out.width= '75%', fig.align='right'}
 AIC <- AIC(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% pander()
 AIC
 ```
