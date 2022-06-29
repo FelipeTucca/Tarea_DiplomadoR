@@ -313,7 +313,7 @@ kbl(Tabla_peso, caption = "Tabla 2. Resumen del peso (g) en S. salar cuando se r
 Para resumir la biomasa muerta de *S. salar* a causa del bloom de algas y oxígeno disuelto en su conjunto, se generaron tablas y análisis de regresión lineal simple para los datos por centro, mes y año. 
 
 
-### *Biomasa muerta por Centro**
+### **Biomasa muerta por Centro**
 
 Dentro del análisis descriptivo por centro de cultivo se observa que en promedio la mayor biomasa muerta en estos últimos 10 años se registra para CM0235, CM0740 y CM0778 (> 10 ton). Para el caso de los dos primeros centros (CM0235 y CM0740) se visualiza un alto número de reportes por mortalidad (biomasa muerta) en comparación al resto de los centros de cultivo presentes en el área de estudio (Tabla 3).
 
@@ -324,7 +324,7 @@ kbl(Tabla_centro, caption = "Tabla 3. Resumen de la biomasa muerta (toneladas) p
 ```
 
 
-####**Ajuste modelo biomasa muerta por centro**
+#### **Ajuste modelo biomasa muerta por centro**
 
 Basado en el ajuste del modelo de ANOVA una vía por criterio de clasificación **centro de cultivo** nos dice que el modelo general existen diferencias en la biomasa muerta entre centros de cultivos (p valor mayor 0.05), por lo tanto, se rechaza la **hipótesis nula** que hace referencia a una similitud en biomasa muerta entre centros del cultivos para registros comprendidos entre los periodos 2011 a 2022. En cuanto al análisis de covarianza el modelo simple con la variable centro de cultivo solo un **6%** del ajuste (R2 ajustado) de la predicción explicaría la biomasa muerta.
 
@@ -337,7 +337,7 @@ summary(modelo1_anova1_centro)
 
 
 
-### *Biomasa muerta por mes**
+### **Biomasa muerta por mes**
 
 En este análisis descriptivo es posible observar que la mayor biomasa muerta dentro del barrio ocurrió en el mes 4 con un promedio de 30 (desviación estándar = 116; rango= 0.0005 - 1031) toneladas. Para el mes 7 fue donde se reportó la menor biomasa muerta (ton) dentro de estos últimos 10 años con un promedio de 0.8 toneladas (Tabla 4). 
 
@@ -349,7 +349,7 @@ kbl(Tabla_mes, caption = "Tabla 4. Resumen de la biomasa muerta (toneladas) por 
 
 
 
-####**Ajuste modelo biomasa muerta por mes**
+#### **Ajuste modelo biomasa muerta por mes**
 
 Basado en el ajuste del modelo de ANOVA una vía por criterio de clasificación **mes** nos dice que el modelo general existen diferencias en la biomasa muerta entre meses (p valor mayor 0.05), por lo tanto, se rechaza la **hipótesis nula** que hace referencia a una similitud en biomasa muerta entre meses. En cuanto al análisis de covarianza el modelo simple con la variable mes solo un **7%** del ajuste (R2 ajustado) de la predicción explicaría la biomasa muerta.
 
@@ -362,7 +362,7 @@ summary(modelo2_anova2_mes)
 
 
 
-### *Biomasa muerta por año**
+### **Biomasa muerta por año**
 
 Se observa que el año 2021 existió una mayor biomasa muerta dentro del barrio en estudio con un promedio de 15.8 toneladas y un número de registros de 346. Por otro lado, para el año 2018 se observa una alta biomasa muerta (promedio 8 toneladas) con solo 2 registros dentro del barrio (Tabla 5).
 
@@ -374,7 +374,7 @@ kbl(Tabla_año, caption = "Tabla 5. Resumen de la biomasa muerta (toneladas) por
 
 
 
-####**Ajuste modelo biomasa muerta por año**
+#### **Ajuste modelo biomasa muerta por año**
 
 Basado en el ajuste del modelo de ANOVA una vía por criterio de clasificación **año** nos dice que el modelo general existen diferencias en la biomasa muerta entre años (p valor mayor 0.05), por lo tanto, se rechaza la **hipótesis nula** que hace referencia a una similitud en biomasa muerta entre años. En cuanto al análisis de covarianza el modelo simple con la variable año solo un **3%** del ajuste (R2 ajustado) de la predicción explicaría la biomasa muerta.
 
@@ -388,7 +388,7 @@ summary(modelo3_anova3_año)
 
 
 
-### *Tabla dinámica DT()**
+### **Tabla dinámica DT()**
 
 Debido al alto número de registros históricos (n= 1224) por centro para el barrio en estudio se generó una tabla dinámica mediante la función DT::datatable() lo cual permitirá realizar búsquedas de información específica dentro de la base de datos *Mortalidad1*.
 
@@ -403,15 +403,15 @@ DT::datatable(Mortalidad1, caption = "Tabla 6. Mortalidad en Salmo salar entre l
 Mediante un analisis de covarianza se investigó la relación entre la biomasa muerta de salmones y los factores causa, centro de cultivo mes y año. Para ello se formularon las siguientes hipótesis:
 
 
-#### Formulación de la hipótesis 
+## **Formulación de la hipótesis** 
 
-## **~H0~**: $$ \beta_{j} = 0 ; j= 1,2,..., k $$
+### **~H0~**: $$ \beta_{j} = 0 ; j= 1,2,..., k $$
 
-## **~H1~**: $$ \beta_{j} \ne 0 ; j= 1,2,..., k $$
+### **~H1~**: $$ \beta_{j} \ne 0 ; j= 1,2,..., k $$
 
 
 
-#### Ajuste del modelo múltiple y evaluación de supuestos
+### **Ajuste del modelo múltiple y evaluación de supuestos**
 
 El modelo cumple con los tres supuestos: linealidad, homogeneidad de varianza y normalidad. Por otro lado este modelo nos estrega como resultado coeficientes distintos de cero, por lo tanto, se rechaza la HO (valores p menores al 5%). El R2 ajustado de esta modelación múltiple correspondió al 23%. 
 
@@ -433,11 +433,17 @@ plot(lm.aov_biomasa)
 
 Al llevara a cabo una comparación de modelos mediante los crietrios de anova de residuales (RSS) y Akaike Information Criterion (AIC) se observa que los menores valores correspndieron al modelo lineal múltiple que integró las variables causa, centro de cultivo, mes y año, siendo los valores residuales y penalización en el número de variables menores que los modelos simples.
 
-```{r comparación de modelos completo y simples, echo=TRUE}
+```{r comparación de modelos completo y simples RSS, echo=TRUE}
 anova(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% pander()
 
-AIC <- AIC(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% pander()
 ```
+
+
+```{r comparación de modelos completo y simples AIC, echo=TRUE}
+AIC <- AIC(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% pander()
+AIC
+```
+
 
 
 # **Interpretación de resultados y conclusiones**
