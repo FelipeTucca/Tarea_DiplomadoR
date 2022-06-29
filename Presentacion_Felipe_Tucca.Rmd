@@ -31,6 +31,7 @@ library(multcomp)
 library(car)
 ```
 
+
 ## **Estructura del trabajo exploratorio y estadístico**
 
 **1).** **Introducción**
@@ -53,6 +54,7 @@ library(car)
 **4).** **Interpretación y conclusiones del trabajo**
 
 
+
 ## **Introducción**
 
 **1).** **Descripción de la problemática**
@@ -65,11 +67,13 @@ library(car)
 - Variables de estudio: Causa, peso (g), años, mes, semana e identificación de centro de cultivo.
 
 
+
 ## **Objetivo del estudio**
 
 - Evaluar la causa de mortalidad por bloom de algas y OD sobre la especie *Salmo salar* para un barrio del sur de Chile entre los años 2011 a inicios del 2022. 
 
 - Generar un modelo lineal que mejor ajuste la predicción de mortalidad en la biomasa de salmones.
+
 
 
 ## **Análisis exploratorio de los datos**
@@ -83,6 +87,8 @@ library(car)
 knitr::include_graphics("Histograma_biomasa_muerta_causa.png")
 ```
 
+
+
 ## **Análisis exploratorio de los datos**
 
 - Datos faltantes para la causa de mortalidad por bloom entre el periodo 2011 a 2022.
@@ -91,6 +97,7 @@ knitr::include_graphics("Histograma_biomasa_muerta_causa.png")
 ```{r, echo = FALSE, out.width= '75%', fig.align='center', fig.cap= "Boxplot biomasa muerta por año y causa"}
 knitr::include_graphics("boxplot_biomasa_muerta_año.png")
 ```
+
 
 
 ## **Análisis exploratorio de los datos**
@@ -102,6 +109,7 @@ knitr::include_graphics("boxplot_biomasa_muerta_año.png")
 ```{r, echo = FALSE, out.width= '75%', fig.align='center', fig.cap= "Biomasa muerta por semana y causa"}
 knitr::include_graphics("Biomasa_muerta_semana_causa.png")
 ```
+
 
 
 ## **Análisis exploratorio de los datos**
@@ -152,6 +160,7 @@ kbl(Tabla_causa, caption = "Tabla 1. Resumen de la biomasa muerta (toneladas) pa
 
 
 
+
 ## **Análisis estadísitico de los datos: Modelo lineal múltiple**
 
 - La modelación integró los factores causa, centro, año, mes y la inetracción entre causa y año.
@@ -165,6 +174,7 @@ Mortalidad2 <- Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %
 lm.aov_biomasa <- lm(log_biomasa ~ Causa * año + centro_id + mes, data = Mortalidad2)
 anova(lm.aov_biomasa)
 ```
+
 
 
 ## **Comparación de modelos RSS-AIC**
@@ -181,6 +191,7 @@ anova(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_bio
 AIC <- AIC(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% pander()
 AIC
 ```
+
 
 
 ## **Interpretación y conclusiones del trabajo**
