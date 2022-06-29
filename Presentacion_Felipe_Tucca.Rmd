@@ -5,11 +5,8 @@ date: "`r Sys.Date()`"
 output: 
 slidy_presentation: default
 ioslides_presentation: default 
-beamer_presentation:
-  theme: CambridgeUS
-  colortheme: dolphin
-  fonttheme: professionalfonts
-  includes:
+beamer_presentation: default
+    includes:
     in_header: mystyle.tex
 subtitle: Mortalidad de salmón del Atlántico por causa de bloom de algas y oxígeno disuelto para un barrio de la región de Los Lagos
 institute: Instituto Tecnológico del Salmón (INTESAL)
