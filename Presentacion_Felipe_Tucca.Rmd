@@ -9,6 +9,7 @@ beamer_presentation:
   fonttheme: professionalfonts
   includes:
     in_header: mystyle.tex
+    slidy_presentation: default
 subtitle: Mortalidad de salmón del Atlántico por causa de bloom de algas y oxígeno disuelto para un barrio del sur de Chile
 institute: Instituto Tecnológico del Salmón (INTESAL)
 ---
@@ -20,6 +21,13 @@ library(kableExtra)
 library(ggplot2)
 library(dplyr)
 library(readxl)
+library(stats)
+library(tidyr)
+library(pander)
+library(lmtest)
+library(gridExtra)
+library(multcomp)
+library(car)
 ```
 
 ## **Estructura del trabajo exploratorio y estadístico**
@@ -104,6 +112,12 @@ knitr::include_graphics("Biomasa_muerta_semana_causa.png")
 - Peso promedio de los salmnes muertos fue de 3.1 kilogramos.
 
 ```{r, message=FALSE, out.width= '75%', fig.align='center'}
+Mortalidad <- read_excel("Mortalidad.xlsx")
+Mortalidad$centro_id <- as.factor(Mortalidad$centro_id)
+Mortalidad$año <- as.factor(Mortalidad$año)
+Mortalidad$mes <- as.factor(Mortalidad$mes)
+Mortalidad$Semana <- as.factor(Mortalidad$Semana)
+Mortalidad1 <- gather(Mortalidad,"Causa", "Muertos", 7:8 ) %>% filter(Muertos > 0)
 Tabla_causa <- Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% group_by(Causa) %>% summarize("N"= n(), "Promedio"= mean(Biomasa_ton), "DE"= sd(Biomasa_ton),"Mediana"= median(Biomasa_ton), "Mín"= min(Biomasa_ton), "Máx"= max(Biomasa_ton))
 
 kbl(Tabla_causa, caption = "Tabla 1. Resumen de la biomasa muerta (toneladas) para la especie S. salar por causa entre los años 2011 al 2021") %>% kable_classic_2()
