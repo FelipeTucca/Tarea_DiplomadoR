@@ -1,8 +1,15 @@
 ---
-title: "Análisis exploratorio y estadístico de datos"
+title: "Presentación Análisis Exploratorio y Estadístico de datos"
+subtitle: 'Mortalidad de *Salmo salar* por causa de bloom de algas y oxígeno disuelto para un barrio del sur de Chile'
 author: "Felipe Tucca"
+institute: Instituto Tecnológico del Salmón (INTESAL)
 date: '2022-06-29'
 output: beamer_presentation
+  theme: "CambridgeUS"
+    colortheme: "dolphin"
+      fonttheme: "professionalfonts"
+      includes:
+        in_header: mystyle.tex
 ---
 
 ```{r setup, include=FALSE}

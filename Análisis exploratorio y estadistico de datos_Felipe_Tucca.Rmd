@@ -3,8 +3,9 @@ title: "Análisis exploratorio y estadísitico de datos"
 author: "Felipe Tucca Díaz"
 date: '2022-06-26'
 output:
-  html_document: default
   pdf_document: default
+  word_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
