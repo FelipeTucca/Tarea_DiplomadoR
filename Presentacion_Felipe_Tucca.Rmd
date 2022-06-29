@@ -3,14 +3,14 @@ title: "Presentación análisis exploratorio y estadistico de los datos"
 author: "Felipe Tucca Díaz"
 date: "`r Sys.Date()`"
 output: 
-  ioslides_presentation: default 
-  slidy_presentation: default
   beamer_presentation: 
     theme: CambridgeUS
     colortheme: dolphin
     fonttheme: proffesionalfonts
     includes:
       in_header: mystyle.tex
+  slidy_presentation: default
+  ioslides_presentation: default 
 subtitle: Mortalidad de salmón del Atlántico por causa de bloom de algas y oxígeno disuelto
 institute: Instituto Tecnológico del Salmón (INTESAL)
 ---
@@ -30,7 +30,6 @@ library(gridExtra)
 library(multcomp)
 library(car)
 ```
-
 
 
 ## **Estructura del trabajo exploratorio y estadístico**
@@ -54,7 +53,6 @@ library(car)
 - Comparación de modelos RSS-AIC.
 
 **4).** **Interpretación y conclusiones del trabajo**
-
 
 
 ## **Introducción**
