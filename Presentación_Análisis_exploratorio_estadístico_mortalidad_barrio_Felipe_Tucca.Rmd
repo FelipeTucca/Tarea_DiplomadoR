@@ -15,53 +15,66 @@ beamer_presentation:
 
 ```{r setup, include=FALSE, comment= TRUE}
 knitr::opts_chunk$set(echo = FALSE)
-
 library(knitr)
 library(kableExtra)
 library(ggplot2)
 library(dplyr)
 library(readxl)
-
 ```
 
-## Estructura del trabajo exploratorio y estadístico
+
+## **Estructura del trabajo exploratorio y estadístico**
 
 **1).** **Introducción**
 
 - Descripción de la problemática
-
 - Variables de estudio y número de observaciones
 
 **2).** **Análisis exploratorio de los datos**
 
-- Histogramas biomasa muerta por causa
-
+- Histogramas biomasa muerta (toneladas) por causa.
 - Boxplot biomasa muerta por causa para los últimos 10 años
-
 - Tablas de frecuencias
-
 - Correlación entre causa de mortalidad en salmón
 
-
-**3).** **Análisis estadísitico de los datos
+**3).** **Análisis estadísitico de los datos**
 
 - Modelos lineales simples y múltiple
-
-- Comparación de modelos
+- Comparación de modelos RSS-AIC
 
 **4).** **Interpretación y conclusiones del trabajo**
 
 
-## Slide with Bullets
+## **Introducción**
 
-- Bullet 1
-- Bullet 2
-- Bullet 3
+**1).** **Descripción de la problemática**
+- Base de datos presenta registros de mortalidad por causa **bloom de algas y 
+disminución de oxígeno disuelto (OD)** 
+- 23 centros de cultivos reportaron la causal de mortalidad en salmón para un 
+barrio de la Región de Los Lagos.
+- *Salmo salar* es la especie más cultivada en este barrio.
 
-## Slide with R Output
+**2).** **Variables de estudio y número de observaciones**
+- Los registros corresponden a reportes de mortalidad entre los años 2011 e 
+incio del 2022 (Total de registros= 1224).
+- Variables de estudio: Causa, peso (g), años, mes, semana e identificación 
+de centro de cultivo.
 
-```{r cars, echo = TRUE}
-summary(cars)
+
+## **Objetivo del estudio**
+
+- Evaluar la causa de mortalidad por bloom de algas y OD sobre la especie 
+*Salmo salar* para un barrio del sur de Chile entre los años 2011 a inicios del 
+2022. 
+
+- Generar un modelo lineal que mejor ajuste la predicción de mortalidad en la
+biomasa de salmones.
+
+
+## **Análisis exploratorio de los datos**
+
+```{r, echo = FALSE, out.width= '90%', fig.align='center', fig.cap= "Histograma biomasa muerta (toneladas) por causa"}
+knitr::include_graphics("histograma 2 datos transformados log biomasa muerta y causa de mortalidad")
 ```
 
 ## Slide with Plot
