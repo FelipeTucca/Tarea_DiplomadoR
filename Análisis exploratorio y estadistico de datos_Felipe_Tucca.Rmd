@@ -32,7 +32,7 @@ library(car)
 
 # **Análisis exploratorio de datos sobre la mortalidad en *Salmo salar* a causa de los factores bloom de algas y oxígeno disuelto**
 
-```{r excel, echo=TRUE}
+```{r set de datos en excel, echo=TRUE}
 Mortalidad <- read_excel("Mortalidad.xlsx")
 ```
 
@@ -83,7 +83,7 @@ Mortalidad1 <- gather(Mortalidad,"Causa", "Muertos", 7:8 ) %>% filter(Muertos > 
 summary(Mortalidad1)
 ```
 
-La columna Causa se transformó a factor mediante la función as.factor().
+La columna causa se transformó a factor mediante la función as.factor().
 
 ```{r transformación datos, echo=TRUE}
 Mortalidad1$Causa <- as.factor(Mortalidad1$Causa)
@@ -176,7 +176,7 @@ Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_b
 
 Dentro de esta base de datos se observa que la causa de mortalidad en *Salmo salar* para el barrio en estudio durante el periodo 2011 al 2022 **no se encuentra balanceada**, registrándose una mayor frecuencia para la variable oxígeno disuelto (864 registros) que por bloom de algas (360 registros).
 
-```{r balance de datos Causa, echo=TRUE}
+```{r balance de datos causa, echo=TRUE}
 table(Mortalidad1$Causa)
 ```
 
@@ -209,7 +209,7 @@ En esta gráfica se identificaron **datos faltantes** para la causa de muerte en
 En cuanto a **valores atípicos**, principalmente se observan registros de biomasa muerta por causa bloom de algas escapándose del gráfico de cajas y bigotes, siendo estos durante los años 2013, 2015 y 2019. Mientras que para la causa de muerte por oxígeno disuelto (OD) se visualizan **valores atípicos** para los año 2011, 2019 y 2021. Estos valores atípicos demostraron ser casos puntuales en mortalidad en peces siendo posiblemente relacionado con el periodo y ocurrencia de baja de OD o presencia de bloom de algas. Si bien, es un registro estimado de mortalidad por centro, es probable que existan errores en la toma de datos, ya que su estimación se basa en el peso y numero de individuos global existentes en jaulas afectadas, no obstante, en base a las ordenes de magnitud permite tener una idea general del problema que afecta a los centros de cultivos presentes en el barrio. 
 
 
-```{r boxplot biomasa muerta por Causa anual, echo=TRUE}
+```{r boxplot biomasa muerta por causa anual, echo=TRUE}
 Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_biomasa= log(Biomasa_ton)) %>% ggplot(aes(x= año, y= log_biomasa, fill= Causa)) + geom_boxplot() + labs( title = "Biomasa muerta (ton) por causa entre el 2011 al 2022")+ theme_bw()
 ```
 
@@ -310,7 +310,7 @@ kbl(Tabla_peso, caption = "Tabla 2. Resumen del peso (g) en S. salar cuando se r
 ```
 
 
-Para resumir la biomasa muerta de *S. salar* a causa del bloom de algas y oxígeno disuelto en su conjunto dentro se generaron tablas que muestran el registro por centro, mes y año. 
+Para resumir la biomasa muerta de *S. salar* a causa del bloom de algas y oxígeno disuelto en su conjunto, se generaron tablas y análisis de regresión lineal simple para los datos por centro, mes y año. 
 
 
 ### *Biomasa muerta por Centro**
@@ -398,9 +398,7 @@ DT::datatable(Mortalidad1, caption = "Tabla 6. Mortalidad en Salmo salar entre l
 
 
 
-# **Análisis estadístico de datos**
-
-## **Modelo regresión lineal**
+# **Modelo regresión lineal múltiple**
 
 Mediante un analisis de covarianza se investigó la relación entre la biomasa muerta de salmones y los factores causa, centro de cultivo mes y año. Para ello se formularon las siguientes hipótesis:
 
@@ -413,8 +411,7 @@ Mediante un analisis de covarianza se investigó la relación entre la biomasa m
 
 #### Ajuste del modelo múltiple y evaluación de supuestos
 
-El modelo cumple con los tres supuestos de linealidad
-El modelo de regresión lineal nos entrega como resultado 
+El modelo cumple con los tres supuestos: linealidad, homogeneidad de varianza y normalidad. Por otro lado este modelo nos estrega como resultado coeficientes distintos de cero, por lo tanto, se rechaza la HO (valores p menores al 5%). El R2 ajustado de esta modelación múltiple correspondió al 23%. 
 
 ```{r modelo lineal datos mortalidad, echo=TRUE}
 Mortalidad2 <- Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_biomasa= log(Biomasa_ton))
@@ -441,7 +438,7 @@ AIC <- AIC(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.ao
 ```
 
 
-### **Conclusiones**
+# **Interpretación de resultados y conclusiones**
 
 Para este modelo **se cumplen los 3 supuestos** que ponen a prueba la linealidad, homogeniedad y normalidad de los datos, por lo que fue posible llevar a cabo un análisis de varianza. Por otro lado, el **intercepto (Beta 0) y las pendientes (Beta 1, Beta 2, etc.) fueron significativamente distintas de cero, rechazándose la hipótesis nula (H0) con un nivel de siginificancia menor al 5%**. En cuanto al análisis de covarianza el modelo representa un **23%** del ajuste de la predicción para la variable biomasa muerta, las cuales fueron definidas por causa, centro de cultivo, mes y año. El p valor del modelo en su conjunto fue de 2.2e-16, por lo tanto, el modelo nos permite predecir biomasa muerta en función de las variables antes mencionadas.
 
