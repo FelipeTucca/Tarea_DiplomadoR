@@ -3,16 +3,16 @@ title: "Presentación análisis exploratorio y estadistico de los datos"
 author: "Felipe Tucca Díaz"
 date: "`r Sys.Date()`"
 output: 
-slidy_presentation: default
-ioslides_presentation: default 
-beamer_presentation: default
+  ioslides_presentation: default 
+  slidy_presentation: default
+  beamer_presentation: default
     includes:
-    in_header: mystyle.tex
+      in_header: mystyle.tex
 subtitle: Mortalidad de salmón del Atlántico por causa de bloom de algas y oxígeno disuelto para un barrio de la región de Los Lagos
 institute: Instituto Tecnológico del Salmón (INTESAL)
 ---
 
-```{r setup, include=FALSE, comment= TRUE}
+```{r setup, include=FALSE, comment= FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 library(knitr)
 library(kableExtra)
