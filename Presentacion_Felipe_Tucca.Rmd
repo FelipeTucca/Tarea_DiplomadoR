@@ -8,7 +8,7 @@ output:
     colortheme: dolphin
     fonttheme: professionalfonts
     includes:
-    in_header: mystyle.tex
+      in_header: mystyle.tex
   ioslides_presentation: default
   slidy_presentation: default
 subtitle: Mortalidad de salmón del Atlántico por causa de bloom y OD
@@ -48,7 +48,6 @@ library(car)
 - Modelos lineales simples y múltiple.
 - Comparación de modelos RSS-AIC.
 
-**4)** **Interpretación y conclusiones del trabajo**
 
 
 ## **Introducción**
@@ -60,8 +59,6 @@ library(car)
 - 23 centros de cultivos reportaron la causal de mortalidad en salmón para un barrio de la Región de Los Lagos.
 
 - *Salmo salar* es la especie más cultivada en este barrio.
-
-**2).** **Variables de estudio y número de observaciones**
 
 - Los registros corresponden a reportes de mortalidad entre los años 2011 e incio del 2022 (Total de registros= 1224).
 
@@ -200,7 +197,7 @@ anova(lm.aov_biomasa) %>% kbl() %>% kable_classic_2()
 
 - Ambos criterios sugieren al modelo lineal múltiple con la mejor predicción y ajuste (23%).
 
-```{r, out.width= '80%', fig.align=}
+```{r, out.width= '80%', fig.align='left'}
 anova(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% pander()
 ```
 
