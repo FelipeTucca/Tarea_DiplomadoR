@@ -1,7 +1,7 @@
 ---
 title: "Análisis Exploratorio y Estadístico de los Datos"
 author: "Felipe Tucca"
-date: '`r format(Sys.Date(), "%B %d, %Y")`'
+date: "`r Sys.Date()`"
 output:
   beamer_presentation:
     theme: CambridgeUS
@@ -37,16 +37,17 @@ library(car)
 **1)** **Introducción**
 
 - Descripción de la problemática.
-- Variables de estudio y número de observaciones.
 
 **2)** **Análisis exploratorio de los datos**
 
 - Histogramas biomasa muerta (toneladas) por causa.
+
 - Boxplot biomasa muerta por causa para los últimos 10 años.
 
 **3)** **Análisis estadísitico de los datos**
 
 - Modelos lineales simples y múltiple.
+
 - Comparación de modelos RSS-AIC.
 
 **4)** **Interpretación y conclusiones del trabajo**
@@ -57,23 +58,26 @@ library(car)
 **1).** **Descripción de la problemática**
 
 - Base de datos presenta registros de mortalidad por causa **bloom de algas y disminución de oxígeno disuelto (OD)**. 
+
 - 23 centros de cultivos reportaron la causal de mortalidad en salmón para un barrio de la Región de Los Lagos.
+
 - *Salmo salar* es la especie más cultivada en este barrio.
 
 **2).** **Variables de estudio y número de observaciones**
 
 - Los registros corresponden a reportes de mortalidad entre los años 2011 e incio del 2022 (Total de registros= 1224).
+
 - Variables de estudio: Causa, peso (g), años, mes, semana e identificación de centro de cultivo.
 
 
 ## **Objetivos del estudio**
 
-- Evaluar la causa de mortalidad por bloom de algas y OD sobre la especie *Salmo salar* para un barrio del sur de Chile entre los años 2011 a inicios del 2022. 
+- Evaluar la causa de mortalidad por bloom de algas y OD sobre la especie *Salmo salar* para un barrio del sur de Chile entre los años 2011 a inicios del 2022.
+
 - Generar un modelo lineal que mejor ajuste la predicción de mortalidad en la biomasa de salmones.
 
 
 ## **Análisis exploratorio de los datos**
-
 
 - Datos desbalanceados por causa de muertes debido a bloom de algas (n= 360) y OD (n= 864).
 
@@ -81,12 +85,12 @@ library(car)
 
 - No existe correlación significativa (p<0.05) entre las causas de muerte por bloom de algas y disminución de oxígeno disuelto.
 
+- Entre los periodos 2011 a 2022 existe una mayor biomasa muerta (ton) de *S. salar* en el barrio por causa de la acción de bloom de algas.
+
 
 ## **HISTOGRAMA**
 
-- Entre los periodos 2011 a 2022 existe una mayor biomasa muerta (ton) de *S. salar* en el barrio por causa de la acción de bloom de algas.
-
-```{r, echo = FALSE, out.width= '80%', fig.align='center', fig.cap= "Histograma biomasa muerta (toneladas) por causa"}
+```{r, echo = FALSE, out.width= '85%', fig.align='center', fig.cap= "Histograma biomasa muerta (toneladas) por causa"}
 knitr::include_graphics("Histograma_biomasa_muerta_causa.png")
 ```
 
@@ -102,7 +106,7 @@ knitr::include_graphics("Histograma_biomasa_muerta_causa.png")
 
 ## **BOXPLOT**
 
-```{r, echo = FALSE, out.width= '80%', fig.align='center', fig.cap= "Boxplot biomasa muerta por año y causa"}
+```{r, echo = FALSE, out.width= '75%', fig.align='center', fig.cap= "Boxplot biomasa muerta por año y causa"}
 knitr::include_graphics("boxplot_biomasa_muerta_año.png")
 ```
 
@@ -113,10 +117,10 @@ knitr::include_graphics("boxplot_biomasa_muerta_año.png")
 
 - Año 2021 presentó la mayor biomasa de salmones muertos siendo afectada por la **acción de bloom de algas**.
 
+- Año 2021 presentó la mayor mortalidad registrada históricamente en este barrio (log biomasa muerta > 5).
+
 
 ## **Relación biomasa muerta y las semanas que se reportó mortalidad**
-
-- Año 2021 presentó la mayor mortalidad registrada históricamente en este barrio (log biomasa muerta > 5).
 
 ```{r, echo = FALSE, out.width= '80%', fig.align='center', fig.cap= "Biomasa muerta por semana y causa"}
 knitr::include_graphics("Biomasa_muerta_semana_causa.png")
@@ -133,8 +137,6 @@ knitr::include_graphics("Biomasa_muerta_semana_causa.png")
 
 
 ## **Tabla resumen de la biomasa muerta por causa**
-
- Descripción estadística de la biomasa muerta según causa: 
  
 ```{r, message=FALSE, out.width= '70%', fig.align='center'}
 Mortalidad <- read_excel("Mortalidad.xlsx")
@@ -145,7 +147,7 @@ Mortalidad$Semana <- as.factor(Mortalidad$Semana)
 Mortalidad1 <- gather(Mortalidad,"Causa", "Muertos", 7:8 ) %>% filter(Muertos > 0)
 Tabla_causa <- Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% group_by(Causa) %>% summarize("N"= n(), "Promedio"= mean(Biomasa_ton), "DE"= sd(Biomasa_ton),"Mediana"= median(Biomasa_ton), "Mín"= min(Biomasa_ton), "Máx"= max(Biomasa_ton))
 
-kbl(Tabla_causa, caption = "Tabla 1. Resumen de la biomasa muerta (toneladas) para la especie S. salar por causa entre los años 2011 al 2021") %>% kable_classic_2()
+kbl(Tabla_causa, caption = "Resumen de la biomasa muerta (toneladas) para la especie S. salar por causa entre los años 2011 al 2021") %>% kable_classic_2()
 ```
 
 
@@ -201,14 +203,14 @@ anova(lm.aov_biomasa) %>% kbl() %>% kable_classic_2()
 - Ambos criterios sugieren al modelo lineal múltiple con la mejor predicción y ajuste (23%).
 
 ```{r, out.width= '70%', fig.align='center'}
-anova(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% kbl() %>% kable_classic_2()
+anova(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% pander()
 ```
 
 
 ## **Comparación de modelos por AIC**
 
 ```{r, out.width= '70%', fig.align='center'}
-AIC <- AIC(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% kbl() %>% kable_classic_2()
+AIC <- AIC(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% pander()
 AIC
 ```
 
