@@ -11,7 +11,7 @@ output:
       in_header: mystyle.tex
   ioslides_presentation: default
   slidy_presentation: default
-subtitle: Mortalidad de salmón del Atlántico por causa de bloom y OD
+subtitle: Mortalidad en salmón del Atlántico por causa de bloom y OD
 institute: Instituto Tecnológico del Salmón
 ---
 
