@@ -34,22 +34,22 @@ library(car)
 
 ## **Estructura del trabajo exploratorio y estadístico**
 
-**1).** **Introducción**
+**1)** **Introducción**
 
 - Descripción de la problemática.
 - Variables de estudio y número de observaciones.
 
-**2).** **Análisis exploratorio de los datos**
+**2)** **Análisis exploratorio de los datos**
 
 - Histogramas biomasa muerta (toneladas) por causa.
 - Boxplot biomasa muerta por causa para los últimos 10 años.
 
-**3).** **Análisis estadísitico de los datos**
+**3)** **Análisis estadísitico de los datos**
 
 - Modelos lineales simples y múltiple.
 - Comparación de modelos RSS-AIC.
 
-**4).** **Interpretación y conclusiones del trabajo**
+**4)** **Interpretación y conclusiones del trabajo**
 
 
 ## **Introducción**
@@ -190,7 +190,7 @@ kbl(Tabla_causa, caption = "Tabla 1. Resumen de la biomasa muerta (toneladas) pa
 ```{r message=FALSE, out.width= '70%', fig.align='center'}
 Mortalidad2 <- Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_biomasa= log(Biomasa_ton))
 lm.aov_biomasa <- lm(log_biomasa ~ Causa * año + centro_id + mes, data = Mortalidad2)
-anova(lm.aov_biomasa)
+anova(lm.aov_biomasa) %>% kbl() %>% kable_classic_2()
 ```
 
 
@@ -201,14 +201,14 @@ anova(lm.aov_biomasa)
 - Ambos criterios sugieren al modelo lineal múltiple con la mejor predicción y ajuste (23%).
 
 ```{r, out.width= '70%', fig.align='center'}
-anova(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% pander()
+anova(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% kbl() %>% kable_classic_2()
 ```
 
 
 ## **Comparación de modelos por AIC**
 
 ```{r, out.width= '70%', fig.align='center'}
-AIC <- AIC(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% pander()
+AIC <- AIC(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% kbl() %>% kable_classic_2()
 AIC
 ```
 
