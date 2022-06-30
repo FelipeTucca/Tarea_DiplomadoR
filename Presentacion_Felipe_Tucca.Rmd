@@ -194,20 +194,17 @@ anova(lm.aov_biomasa) %>% kbl() %>% kable_classic_2()
 ```
 
 
-## **Comparación de modelos por RSS**
+## **Comparación de modelos por RSS y AIC**
 
 - Crietrios de anova de residuales (RSS) y Akaike Information Criterion (AIC)
 
 - Ambos criterios sugieren al modelo lineal múltiple con la mejor predicción y ajuste (23%).
 
-```{r, out.width= '80%', fig.align='center'}
+```{r, out.width= '80%', fig.align=}
 anova(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% pander()
 ```
 
-
-## **Comparación de modelos por AIC**
-
-```{r, out.width= '80%', fig.align='center'}
+```{r, out.width= '80%', fig.align='right'}
 AIC <- AIC(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% pander()
 AIC
 ```
@@ -220,9 +217,6 @@ AIC
 - Mortalidad por baja de OD presenta mayor frecuencia.
 
 - Se realizó ANOVA con un vía de criterio de clasificación para los factores centro de cultivo, semanas y años con ajustes menores al 7%.
-
-
-## **Interpretación y y conclusiones del trabajo**
 
 - Modelo lineal múltiple agrupó todas los factores mostrando un significancia menor al 5%.
 
