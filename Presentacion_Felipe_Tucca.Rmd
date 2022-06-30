@@ -11,6 +11,7 @@ output:
     includes:
       in_header: mystyle.tex
   slidy_presentation: default
+  '': default
 subtitle: Mortalidad de salmón del Atlántico por causa de bloom y OD
 institute: Instituto Tecnológico del Salmón
 ---
@@ -37,19 +38,16 @@ library(car)
 **1).** **Introducción**
 
 - Descripción de la problemática.
-
 - Variables de estudio y número de observaciones.
 
 **2).** **Análisis exploratorio de los datos**
 
 - Histogramas biomasa muerta (toneladas) por causa.
-
 - Boxplot biomasa muerta por causa para los últimos 10 años.
 
 **3).** **Análisis estadísitico de los datos**
 
 - Modelos lineales simples y múltiple.
-
 - Comparación de modelos RSS-AIC.
 
 **4).** **Interpretación y conclusiones del trabajo**
@@ -60,26 +58,22 @@ library(car)
 **1).** **Descripción de la problemática**
 
 - Base de datos presenta registros de mortalidad por causa **bloom de algas y disminución de oxígeno disuelto (OD)**. 
-
 - 23 centros de cultivos reportaron la causal de mortalidad en salmón para un barrio de la Región de Los Lagos.
-
 - *Salmo salar* es la especie más cultivada en este barrio.
 
 **2).** **Variables de estudio y número de observaciones**
 
 - Los registros corresponden a reportes de mortalidad entre los años 2011 e incio del 2022 (Total de registros= 1224).
-
 - Variables de estudio: Causa, peso (g), años, mes, semana e identificación de centro de cultivo.
 
 
 ## **Objetivos del estudio**
 
 - Evaluar la causa de mortalidad por bloom de algas y OD sobre la especie *Salmo salar* para un barrio del sur de Chile entre los años 2011 a inicios del 2022. 
-
 - Generar un modelo lineal que mejor ajuste la predicción de mortalidad en la biomasa de salmones.
 
 
-## **Análisis exploratorio de los datos: Histograma**
+## **Análisis exploratorio de los datos**
 
 - Entre los periodos 2011 a 2022 existe una mayor biomasa muerta (ton) de *S. salar* en el barrio por causa de la acción de bloom de algas.
 
@@ -88,6 +82,9 @@ library(car)
 - Año 2021 con mayor biomasa muerta.
 
 - No existe correlación significativa (p<0.05) entre las causas de muerte por bloom de algas y disminución de oxígeno disuelto.
+
+
+## **Análisis exploratorio de los datos: Histograma**
 
 ```{r, echo = FALSE, out.width= '60%', fig.align='center', fig.cap= "Histograma biomasa muerta (toneladas) por causa"}
 knitr::include_graphics("Histograma_biomasa_muerta_causa.png")
