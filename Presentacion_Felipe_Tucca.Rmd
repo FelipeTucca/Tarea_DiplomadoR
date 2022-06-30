@@ -3,13 +3,13 @@ title: "Análisis Exploratorio y Estadístico de los Datos"
 author: "Felipe Tucca"
 date: "`r Sys.Date()`"
 output:
+  ioslides_presentation: default
   beamer_presentation:
     theme: CambridgeUS
     colortheme: dolphin
     fonttheme: professionalfonts
     includes:
     in_header: mystyle.tex
-  ioslides_presentation: default
   slidy_presentation: default
 subtitle: Mortalidad de salmón del Atlántico por causa de bloom y OD
 institute: Instituto Tecnológico del Salmón
@@ -41,13 +41,11 @@ library(car)
 **2)** **Análisis exploratorio de los datos**
 
 - Histogramas biomasa muerta (toneladas) por causa.
-
 - Boxplot biomasa muerta por causa para los últimos 10 años.
 
 **3)** **Análisis estadísitico de los datos**
 
 - Modelos lineales simples y múltiple.
-
 - Comparación de modelos RSS-AIC.
 
 **4)** **Interpretación y conclusiones del trabajo**
@@ -90,7 +88,7 @@ library(car)
 
 ## **HISTOGRAMA**
 
-```{r, echo = FALSE, out.width= '85%', fig.align='center', fig.cap= "Histograma biomasa muerta (toneladas) por causa"}
+```{r, echo = FALSE, out.width= '90%', fig.align='center', fig.cap= "Histograma biomasa muerta (toneladas) por causa"}
 knitr::include_graphics("Histograma_biomasa_muerta_causa.png")
 ```
 
@@ -106,7 +104,7 @@ knitr::include_graphics("Histograma_biomasa_muerta_causa.png")
 
 ## **BOXPLOT**
 
-```{r, echo = FALSE, out.width= '75%', fig.align='center', fig.cap= "Boxplot biomasa muerta por año y causa"}
+```{r, echo = FALSE, out.width= '90%', fig.align='center', fig.cap= "Boxplot biomasa muerta por año y causa"}
 knitr::include_graphics("boxplot_biomasa_muerta_año.png")
 ```
 
@@ -122,7 +120,7 @@ knitr::include_graphics("boxplot_biomasa_muerta_año.png")
 
 ## **Relación biomasa muerta y las semanas que se reportó mortalidad**
 
-```{r, echo = FALSE, out.width= '80%', fig.align='center', fig.cap= "Biomasa muerta por semana y causa"}
+```{r, echo = FALSE, out.width= '90%', fig.align='center', fig.cap= "Biomasa muerta por semana y causa"}
 knitr::include_graphics("Biomasa_muerta_semana_causa.png")
 ```
 
@@ -138,7 +136,7 @@ knitr::include_graphics("Biomasa_muerta_semana_causa.png")
 
 ## **Tabla resumen de la biomasa muerta por causa**
  
-```{r, message=FALSE, out.width= '70%', fig.align='center'}
+```{r, message=FALSE, out.width= '80%', fig.align='center'}
 Mortalidad <- read_excel("Mortalidad.xlsx")
 Mortalidad$centro_id <- as.factor(Mortalidad$centro_id)
 Mortalidad$año <- as.factor(Mortalidad$año)
@@ -189,7 +187,7 @@ kbl(Tabla_causa, caption = "Resumen de la biomasa muerta (toneladas) para la esp
 
 ## **Análisis de varianza (ANOVA)**
 
-```{r message=FALSE, out.width= '70%', fig.align='center'}
+```{r message=FALSE, out.width= '80%', fig.align='center'}
 Mortalidad2 <- Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_biomasa= log(Biomasa_ton))
 lm.aov_biomasa <- lm(log_biomasa ~ Causa * año + centro_id + mes, data = Mortalidad2)
 anova(lm.aov_biomasa) %>% kbl() %>% kable_classic_2()
@@ -202,14 +200,14 @@ anova(lm.aov_biomasa) %>% kbl() %>% kable_classic_2()
 
 - Ambos criterios sugieren al modelo lineal múltiple con la mejor predicción y ajuste (23%).
 
-```{r, out.width= '70%', fig.align='center'}
+```{r, out.width= '80%', fig.align='center'}
 anova(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% pander()
 ```
 
 
 ## **Comparación de modelos por AIC**
 
-```{r, out.width= '70%', fig.align='center'}
+```{r, out.width= '80%', fig.align='center'}
 AIC <- AIC(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% pander()
 AIC
 ```
