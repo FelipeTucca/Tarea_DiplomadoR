@@ -437,13 +437,13 @@ plot(lm.aov_biomasa)
 Al llevara a cabo una comparación de modelos mediante los crietrios de anova de residuales (RSS) y Akaike Information Criterion (AIC) se observa que los menores valores correspndieron al modelo lineal múltiple que integró las variables causa, centro de cultivo, mes y año, siendo los valores residuales y penalización en el número de variables menores que los modelos simples.
 
 ```{r comparación de modelos completo y simples RSS, echo=TRUE}
-anova(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% pander()
+anova(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% kbl() %>% kable_classic_2()
 
 ```
 
 
 ```{r comparación de modelos completo y simples AIC, echo=TRUE}
-AIC <- AIC(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% pander()
+AIC <- AIC(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% kbl() %>% kable_classic_2()
 AIC
 ```
 
