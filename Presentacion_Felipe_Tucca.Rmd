@@ -45,7 +45,7 @@ library(multcomp)
 - Modelos lineales simples y múltiple.
 - Comparación de modelos usando RSS-AIC.
 
-**3)** **Conclusiones**
+**4)** **Conclusiones del trabajo**
 
 
 ## **Introducción**
