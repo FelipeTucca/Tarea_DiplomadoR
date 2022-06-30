@@ -11,7 +11,7 @@ output:
       in_header: mystyle.tex
   ioslides_presentation: default
   slidy_presentation: default
-subtitle: Mortalidad en Salmo salar por bloom de algas y OD
+subtitle: Mortalidad en Salmo salar por bloom de algas y oxígeno disuelto
 institute: INTESAL
 ---
 
@@ -56,11 +56,11 @@ library(multcomp)
 
 - 23 centros de cultivos reportaron la causal de mortalidad en salmones para un barrio de la Región de Los Lagos.
 
-- El salmón del Atñantico (*Salmo salar*) es la especie más cultivada en el barrio.
+- El salmón del Atlántico (*Salmo salar*) es la especie más cultivada en el barrio.
 
-- Los registros corresponden a mortalidades entre los años 2011 e incio del 2022 (Total de registros= 1224).
+- Los registros corresponden a mortalidades entre los años 2011 e incio del 2022 (total de registros= 1224).
 
-- Las variables de estudio fueron causa mortalidad, peso (g) del salmón, años, mes, semana de registro y la identificación de cada centro de cultivo que operó entre el 2011 al 2022.
+- Las variables de estudio fueron causa de mortalidad, peso (g) del salmón, años, mes, semana de registro y la identificación de cada uno de los centros que operón entre el año 2011 al 2022.
 
 
 ## **Objetivos del estudio**
@@ -74,11 +74,11 @@ library(multcomp)
 
 - Existen datos desbalanceados por causa de muertes en salmonidos: Causas bloom de algas (n= 360) y OD (n= 864).
 
-- **Año 2021** presentó una mayor biomasa muerta para los últimos 10 años.
+- **Año 2021** presentó la mayor biomasa muerta para los últimos 10 años.
 
 - No existe correlación significativa (p<0.05) entre las causas de muerte por bloom de algas y disminución de OD en el barrio.
 
-- **Ha existido una mayor biomasa muerta (ton) en el barrio a causa del bloom de algas**.
+- **La mayor biomasa muerta (ton) en el barrio es por causa del bloom de algas**.
 
 
 ## **HISTOGRAMA**
@@ -92,7 +92,7 @@ knitr::include_graphics("Histograma_biomasa_muerta_causa.png")
 
 - Boxplot consideró la causa de muerte sobre la biomasa de peces entre el 2011 al 2022.
 
-- Existen datos faltantes principalmente para la causa bloom de algas.
+- Existen datos faltantes principalmente para la causa por bloom de algas (2011-2012-2018).
 
 - Valores atípicos se presentaron para los dos casos de mortalidad en salmones.
 
@@ -108,7 +108,7 @@ knitr::include_graphics("boxplot_biomasa_muerta_año.png")
 
 - Se evidencia la ocurrencia de un evento temporal puntual que generó una alta mortalidad en la biomasa de salmones.
 
-- Año 2021 presentó la mayor mortalidad registrada históricamente en este barrio (Log biomasa muerta > 5).
+- En base al analisis de semanas el año 2021 presentó la mayor mortalidad registrada históricamente en el barrio (Log biomasa muerta > 5).
 
 - La mortalidad por **bloom de algas** para el años 2021 generó *valores atípicos* de mortalidad en el barrio.
 
@@ -122,11 +122,11 @@ knitr::include_graphics("Biomasa_muerta_semana_causa.png")
 
 ## **Análisis exploratorio de los datos: Mortalidad bloom vs OD**
 
-- La mayor biomasa muerta es por causa de bloom de algas, alcanzando 16 toneledas en los ultimos 10 años.
+- La mayor biomasa muerta es por causa de bloom de algas, alcanzando un promedio de 16 toneledas en los ultimos 10 años.
 
-- La mortalidad por OD alcanzó las 4.1 toneladas.
+- La mortalidad por OD alcanzó un promedio de 4.1 toneladas de peces muertos.
 
-- El peso promedio de los salmones muertos fue de 3.1 kilogramos (+/- 1.5 kg.)
+- El peso promedio de los salmones muertos fue de 3.1 kilogramos (sd = 1.5 kg).
 
 
 ## **Tabla resumen de la biomasa muerta por causa**
@@ -148,16 +148,16 @@ kbl(Tabla_causa, caption = "Resumen de la biomasa muerta (toneladas) para la esp
 
 - Se realizó un **modelo de regresión lineal simple** con los factores centro, semanas y años.
 
-- Los modelos fueron estadísticamente significativos (p < 0.05), pero con un bajo ajuste o R^2 ajustado menor al 7%.
+- Los modelos fueron estadísticamente significativos (p < 0.05), pero con un ajuste menor al 7% (R^2 ajustado).
 
 
 ## **Hipótesis modelo lineal simple**
 
-- Basado en estos modelos de regresión simple se rechazó hipótesis nula que postuló: 
+- Basado en estos modelos de regresión simple se rechazó la hipótesis nula que postuló: 
 
 **Hipótesis nula (H0)**: Existe similitud en la biomasa muerta entre centros/semanas/años.
 
-- se aceptó H1 con un p < 0.05:
+- Por lo tanto, se acepta H1 con un p < 0.05:
 
 **Hipótesis alternativa (H1)**: No existe similitud en la biomasa muerta entre centros/semanas/años.
 
@@ -175,11 +175,11 @@ kbl(Tabla_causa, caption = "Resumen de la biomasa muerta (toneladas) para la esp
 
 ## **Análisis estadísitico de los datos: Ajuste modelo lineal múltiple**
 
-- La modelación integró los factores causa, centro, año, mes y la inetracción entre causa y año.
+- La modelación integró los factores causa, centro, año, mes y la interacción entre causa y año.
 
 - El modelo nos entrega como resultado coeficientes distintos de cero, por lo tanto, se rechaza la H0 (valores p menores al 5%).
 
-- El valor R^2 ajustado de esta modelación múltiple correspondió a un 23%.
+- El valor R^2 de esta modelación múltiple entrega un 23% de ajuste a la predicción.
 
 
 ## **Análisis de varianza (ANOVA)**
@@ -225,6 +225,6 @@ AIC
 
 - Modelo lineal múltiple agrupó todas los factores mostrando significativamente un mejor ajuste de la predicción para la variable biomasa muerta.
 
-- Análisis comparativo por RSS y AIC determinaron que la **regresión lineal múltiple representa una mejor predicción**
+- Análisis comparativo por RSS y AIC determinaron que la **regresión lineal múltiple representa una mejor predicción**.
 
 
