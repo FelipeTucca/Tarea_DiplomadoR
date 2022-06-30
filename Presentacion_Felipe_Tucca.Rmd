@@ -12,7 +12,7 @@ output:
   ioslides_presentation: default
   slidy_presentation: default
 subtitle: Mortalidad en salmón del Atlántico por causa de bloom y OD
-institute: Instituto Tecnológico del Salmón
+institute: INTESAL
 ---
 
 ```{r setup, include=FALSE, comment=TRUE}
@@ -114,7 +114,7 @@ knitr::include_graphics("boxplot_biomasa_muerta_año.png")
 
 ## **Relación biomasa muerta y las semanas que se reportó mortalidad**
 
-```{r, echo = FALSE, out.width= '90%', fig.align='center', fig.cap= "Biomasa muerta por semana y causa"}
+```{r, echo = FALSE, out.width= '80%', fig.align='center', fig.cap= "Biomasa muerta por semana y causa"}
 knitr::include_graphics("Biomasa_muerta_semana_causa.png")
 ```
 
@@ -130,7 +130,7 @@ knitr::include_graphics("Biomasa_muerta_semana_causa.png")
 
 ## **Tabla resumen de la biomasa muerta por causa**
  
-```{r, message=FALSE, out.width= '80%', fig.align='center'}
+```{r, message=FALSE, out.width= '70%', fig.align='center'}
 Mortalidad <- read_excel("Mortalidad.xlsx")
 Mortalidad$centro_id <- as.factor(Mortalidad$centro_id)
 Mortalidad$año <- as.factor(Mortalidad$año)
@@ -147,16 +147,16 @@ kbl(Tabla_causa, caption = "Resumen de la biomasa muerta (toneladas) para la esp
 
 - **Modelo de regresión lineal simple** con los factores centro, semanas y años.
 
-- Modelos de regresión lineal simple con los factores fueron estadísticamente significativos (p < 0.05), pero con un bajo ajuste o R^2 ajustado menor al 7%.
+- Modelos de regresión lineal simple con los factores fueron estadísticamente significativos (p < 0.05), pero con un bajo ajuste o R[^2] ajustado menor al 7%.
 
 
 ## **Hipótesis modelo lineal simple**
 
 - Basado en estos modelos de regresión simple se rechaza hipótesis nula que postulaba: 
 
-**Hipótesis nula (H0)**: Existe similitud en la biomasa muerta entre centros/semanas/años.
+**Hipótesis nula (H_{0})**: Existe similitud en la biomasa muerta entre centros/semanas/años.
 
-**Hipótesis alternativa (H1)**: No existe similitud en la biomasa muerta entre centros/semanas/años.
+**Hipótesis alternativa (H_{1})**: No existe similitud en la biomasa muerta entre centros/semanas/años.
 
 
 ## **Hipótesis modelo lineal múltiple**
@@ -176,12 +176,12 @@ kbl(Tabla_causa, caption = "Resumen de la biomasa muerta (toneladas) para la esp
 
 - Modelo nos estrega como resultado coeficientes distintos de cero, por lo tanto, se rechaza la HO (valores p menores al 5%).
 
-- El R^2 ajustado de esta modelación múltiple correspondió al 23%.
+- El R[^2] ajustado de esta modelación múltiple correspondió al 23%.
 
 
 ## **Análisis de varianza (ANOVA)**
 
-```{r message=FALSE, out.width= '80%', fig.align='center'}
+```{r message=FALSE, out.width= '75%', fig.align='center'}
 Mortalidad2 <- Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_biomasa= log(Biomasa_ton))
 lm.aov_biomasa <- lm(log_biomasa ~ Causa * año + centro_id + mes, data = Mortalidad2)
 anova(lm.aov_biomasa) %>% kbl() %>% kable_classic_2()
@@ -195,11 +195,11 @@ anova(lm.aov_biomasa) %>% kbl() %>% kable_classic_2()
 - Ambos criterios sugieren al modelo lineal múltiple con la mejor predicción y ajuste (23%).
 
 ```{r, out.width= '80%', fig.align='left'}
-anova(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% pander()
+anova(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% kbl() %>% kable_classic_2()
 ```
 
 ```{r, out.width= '80%', fig.align='right'}
-AIC <- AIC(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% pander()
+AIC <- AIC(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% kbl() %>% kable_classic_2()
 AIC
 ```
 
