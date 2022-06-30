@@ -3,13 +3,13 @@ title: "Análisis Exploratorio y Estadístico de los Datos"
 author: "Felipe Tucca"
 date: "`r Sys.Date()`"
 output:
-  ioslides_presentation: default
   beamer_presentation:
     theme: CambridgeUS
     colortheme: dolphin
     fonttheme: professionalfonts
     includes:
     in_header: mystyle.tex
+  ioslides_presentation: default
   slidy_presentation: default
 subtitle: Mortalidad de salmón del Atlántico por causa de bloom y OD
 institute: Instituto Tecnológico del Salmón
