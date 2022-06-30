@@ -196,7 +196,7 @@ anova(lm.aov_biomasa) %>% kbl() %>% kable_classic_2()
 
 - Ambos criterios sugieren que el modelo lineal múltiple presenta mejor predicción y ajuste (23%).
 
-```{r, out.width= '20%', fig.align='left'}
+```{r, out.width= '10%', fig.align='left'}
 anova_centro <- Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_biomasa= log(Biomasa_ton)) 
 modelo1_anova1_centro <-lm(log_biomasa ~ centro_id, data = anova_centro)
 anova_mes <- Mortalidad1 %>% mutate(Biomasa_ton= (Peso_g * Muertos)/1000000) %>% mutate(log_biomasa= log(Biomasa_ton)) 
@@ -208,7 +208,7 @@ lm.aov_biomasa <- lm(log_biomasa ~ Causa * año + centro_id + mes, data = Mortal
 anova(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% kbl() %>% kable_classic_2()
 ```
 
-```{r, out.width= '20%', fig.align='right'}
+```{r, out.width= '10%', fig.align='right'}
 AIC <- AIC(modelo1_anova1_centro, modelo2_anova2_mes, modelo3_anova3_año, lm.aov_biomasa) %>% kbl() %>% kable_classic_2()
 AIC
 ```
