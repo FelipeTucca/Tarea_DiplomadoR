@@ -19,16 +19,13 @@ institute: Instituto Tecnológico del Salmón
 knitr::opts_chunk$set(echo = FALSE)
 library(knitr)
 library(kableExtra)
-library(ggplot2)
 library(dplyr)
 library(readxl)
 library(stats)
 library(tidyr)
 library(pander)
 library(lmtest)
-library(gridExtra)
 library(multcomp)
-library(car)
 ```
 
 
