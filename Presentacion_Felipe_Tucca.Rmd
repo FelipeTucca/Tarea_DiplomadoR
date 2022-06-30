@@ -130,7 +130,7 @@ knitr::include_graphics("Biomasa_muerta_semana_causa.png")
 
 ## **Tabla resumen de la biomasa muerta por causa**
  
-```{r, message=FALSE, out.width= '10%', fig.align='center'}
+```{r, message=FALSE, out.width= '1%', fig.align='center'}
 Mortalidad <- read_excel("Mortalidad.xlsx")
 Mortalidad$centro_id <- as.factor(Mortalidad$centro_id)
 Mortalidad$año <- as.factor(Mortalidad$año)
